@@ -1,6 +1,6 @@
 # 
 
->> vue-qqmusic
+# Vue-QQMusic
 
 ## Build Setup
 
