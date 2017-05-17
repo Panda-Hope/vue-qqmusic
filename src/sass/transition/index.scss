@@ -1,0 +1,125 @@
+/* ===============================================
+ * 由 Transition.scss 统一管理Transition, Animation
+ * =============================================== */
+
+// Page Turn on Transian Effect
+.turn-on {
+  &-enter {
+    transform: translate3d(100%, 0, 0);
+  }
+  &-leave-to {
+    transform: translate3d(-20%, 0, 0);
+  }
+  &-enter-active, &-leave-active  {
+    transition: transform .4s ease;
+  }
+}
+
+// Page Turn Off Transian Effect
+.turn-off {
+  &-enter {
+    transform: translate3d(-20%, 0, 0);
+  }
+  &-leave-to {
+    transform: translate3d(100%, 0, 0);
+  }
+  &-leave-active {
+    z-index: 2;
+  }
+  &-enter-active, &-leave-active  {
+    transition: transform .4s ease;
+  }
+}
+
+// Page Scroll Header Tittle Effects
+
+
+
+// Song Ablum Infinite Rotate
+.spin-slow {
+  animation: spin 6s linear infinite;
+}
+.spin {
+  animation: spin 30s linear infinite;
+}
+
+@keyframes spin{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// // Bouncedown.css it is copyed from and did a little change
+// // https://github.com/daneden/animate.css/blob/master/source/bouncing_entrances/bounceInDown.css
+// .animated {
+//   animation-duration: .5s;
+//   animation-fill-mode: both;
+// }
+
+// .bounceInDown {
+//   animation-name: bounceInDown;
+// }
+
+// @keyframes bounceInDown {
+//   from, 60%, 75%, 90%, to {
+//     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+//   }
+
+//   0% {
+//     opacity: 0;
+//     transform: translate3d(0, -800px, 0);
+//   }
+
+//   60% {
+//     opacity: 1;
+//     transform: translate3d(0, 25px, 0);
+//   }
+
+//   // 75% {
+//   //   transform: translate3d(0, -10px, 0);
+//   // }
+
+//   // 90% {
+//   //   transform: translate3d(0, 5px, 0);
+//   // }
+
+//   to {
+//     transform: none;
+//   }
+// }
+
+// @keyframes bounceInUp {
+//   from, 60%, 75%, 90%, to {
+//     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+//   }
+
+//   from {
+//     opacity: 0;
+//     transform: translate3d(0, 800px, 0);
+//   }
+
+//   60% {
+//     opacity: 1;
+//     transform: translate3d(0, -20px, 0);
+//   }
+
+//   75% {
+//     transform: translate3d(0, 10px, 0);
+//   }
+
+//   // 90% {
+//   //   transform: translate3d(0, -5px, 0);
+//   // }
+
+//   to {
+//     transform: translate3d(0, 0, 0);
+//   }
+// }
+
+// .bounceInUp {
+//   animation-name: bounceInUp;
+// }
+

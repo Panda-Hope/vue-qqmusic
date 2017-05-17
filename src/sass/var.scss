@@ -1,0 +1,57 @@
+//======= Colors
+$white-base:									#ffffff !default;
+
+$gray-light:									#D7D7D7 !default;
+$gray-minor:									#9B9B9B !default;
+$gray-default:								    #D1D0CD !default;
+$gray-line-default:								#D4D4D4 !default;
+
+$black-base:									#4A4A4A !default;
+
+$yellow-base:									#FFCD00 !default;
+$yellow-active:									#FFB72C !default;
+
+$blue-base:										#0076FF !default;
+$blue-drak:										#356DFC !default;
+$blue-light:									#A2BBFC !default;
+
+$red-drak:										#FA4C3E !default;
+$red-light:										#FFB4B4 !default;
+
+$purple-base:									#8E50F6 !default;
+$purple-active:									#7F38F6 !default;
+
+//** Primary Color
+$primary-color:									#31c27c !default;
+
+//** Background color for `<body>`.
+$bg-color:										$white-base;
+$bg-default:									$gray-default;
+$bg-login:										$yellow-base;
+$bg-primary:									$yellow-base;
+$bg-cancel:										#C9CDD2;
+$bg-register:									$purple-base;
+
+//** Font  Color
+$gray-light-font:								$gray-minor;
+$remark-color:									#BABABA;
+$blue-font:										$blue-base;
+$black-base-font:								$black-base;
+$gray-base-font:								#BEBEBE;
+$gray-minor-font:								#DCDCDC;
+$arrow-font:									$gray-line-default;
+$place-holder-font:								#C9CDD2;
+
+//** Line  Color
+$base-line-color:								$gray-light;
+
+//** Button Color, Active Color
+$default-active:								rgba(#DBDBDB, .5);
+$login-active:									$yellow-active;
+$primary-active:								$yellow-active;
+$register-active:								$purple-active;		
+
+//** Width, Height, Padding, Margin
+$header-height:									40px;
+
+

@@ -1,0 +1,43 @@
+// Set box-sizing border-box
+* {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-touch-callout: none;
+	user-select: none;
+}
+
+
+// remove body margin, set font family in ios 
+body {
+	font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
+	margin: 0;
+	-webkit-text-size-adjust: 100%;
+}
+
+// remove defult list-style
+ol,
+ul {
+	list-style:none;
+	padding: 0;
+	margin: 0;
+}
+
+// Images
+img {
+  vertical-align: middle;
+}
+
+// remove default margin 
+p {
+	margin: 0;
+}
+
+// iOS "clickable elements" fix for role="button"
+//
+// Fixes "clickability" issue (and more generally, the firing of events such as focus as well)
+// for traditionally non-focusable elements with role="button"
+// see https://developer.mozilla.org/en-US/docs/Web/Events/click#Safari_Mobile
+
+[role="button"] {
+  cursor: pointer;
+}

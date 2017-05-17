@@ -1,0 +1,16 @@
+.mint-navbar {
+	.mint-tab-item {
+		background-image: linear-gradient(180deg, #eae7e7, #eae7e7 50%, transparent 50%);
+		background-size: 100% 1px;
+	    background-repeat: no-repeat;
+	    background-position: bottom;
+		.mint-tab-item-label {
+			font-size: 16px;
+		}
+		&.is-selected {
+			margin-bottom: 0;
+			border-bottom-color: $primary-color;
+			color: $primary-color;
+		}
+	}
+}

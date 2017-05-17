@@ -1,0 +1,216 @@
+// QQ title cell 
+.music-cell-type1 {
+	.mint-cell {
+		&-title {
+			text-align: center;
+			font-size: 16px;
+		}
+	}
+	&:last-child {
+		background-image: none;
+	}
+	.mint-cell-wrapper {
+		background-image: none;
+	}
+}
+
+// QQ TopList cell
+.music-cell-type2 {
+	// margin: 0 10px 10px;
+	&:before,&:after {
+		color: transparent;
+	}
+	.mint-cell-wrapper {
+		flex-direction: row-reverse;
+		padding: 0;
+		background-image: none;
+	}
+	.mint-cell-title {
+		overflow: hidden
+	}
+	.mint-cell-value {
+		width: 33%;
+		img {
+			opacity: 0;
+			transition: opacity .5s ease-in;
+			&[lazy="loaded"],&[lazy="error"] {
+				opacity: 1
+			}
+		}
+		.listen-cover {
+			position: relative;
+			width: 100%;
+			img {
+				display: block;
+				width: 100%;
+				max-width: 100%;
+			}
+			.listen-icon {
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				// vertical-align: middle;
+				margin-left: 3px;
+				margin-right: 3px;
+			    background-position: 0 -50px;
+				background-image: url(https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/list_sprite.png?max_age=19830212&d=20151105145423);
+			    background-repeat: no-repeat;
+			    background-size: 24px 60px;
+			}
+			// .play-icon {
+			// 	float: right;
+			// 	display: inline-block;
+			// 	width: 24px;
+			// 	height: 24px;
+			// 	margin-top: -5px;
+			// 	background-image: url(https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/list_sprite.png?max_age=19830212&d=20151105145423);
+			//     background-repeat: no-repeat;
+			//     background-size: 24px 60px;
+			// }
+			.listen-count {
+				position: absolute;
+				top: 100%;
+				margin-top: -16px;
+				font-size: 10px;
+				color: #fff;
+			}
+		}
+	}
+	.mint-cell-right {
+		display: flex;
+		align-items: center;
+		transform: initial;
+		color: rgba(0,0,0,.5);
+	}
+	.song-list {
+		margin: 0 10px 0 10px; 
+		.song-title {
+			font-size: 16px;
+			margin-bottom: 5px;
+		}
+		.song-item {
+		    white-space: nowrap;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+			font-size: 14px;
+		}
+		.song-singer {
+			color: rgba(0,0,0,.5);
+		}
+		li {
+			line-height: 30px;
+		}
+	}
+	.song-arrow {
+	    position: absolute;
+	    right: 10px;
+	    top: 50%;
+	    margin-top: -4px;
+	    width: 6px;
+	    height: 6px;
+	    border-right: 1px solid #b2b2b2;
+	    border-bottom: 1px solid #b2b2b2;
+	    -webkit-transform: rotate(-45deg);
+	}
+}
+
+// QQ RankList cell
+.music-cell-type3 {
+	p {
+		margin: 0;
+	}
+	&:last-child {
+		background-image: none;
+	}
+	.mint-cell-wrapper {
+		padding: 0;
+		height: 60px;
+		background-image: linear-gradient(180deg, #eae7e7, #eae7e7 50%, transparent 50%);
+	}
+	.mint-cell-title {
+		flex: initial;
+	}
+	.mint-cell-value {
+		flex: 1;
+		overflow: hidden;
+		.suffix {
+			width: 50px;
+			p {
+				text-align: center;
+				font-size-adjust: 1;
+			}
+			p:first-child {
+				margin-bottom: 5px;
+			}
+			p:nth-child(2) {
+				font-size: 9px;
+				color: rgba(0, 0, 0, .5);
+			}
+		}
+		.song {
+			flex: 1;
+			overflow: hidden;
+			p {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			p:first-child {
+				color: initial;
+				font-size: 16px;
+			}
+			p:nth-child(2) {
+				margin-top: 5px;
+				font-size: 12px;
+				color: rgba(0, 0, 0, .5);
+			}
+		}
+		.detail {
+			display: inline-block;
+			margin-right: 15px;
+			margin-left: 10px;
+			font-size: 18px;
+			font-weight: bold;
+		}
+	}
+}
+
+// RankList.Vue SongList Control Cell
+.music-cell-type4 {
+	&:last-child {
+		background-image: none;
+	}
+	.mint-cell-wrapper {
+		padding: 0;
+		height: 60px;
+		background-image: none;
+	}
+	.mint-cell-title {
+		flex: 0;
+	}
+	.mint-cell-value {
+		flex: 1;
+		padding: 0 10px;
+		justify-content: space-between;
+		color: $black-base-font;
+		.icon {
+			width: 24px;
+			margin-right: 10px;
+		}
+	}
+}
+
+// Bottom Fixed Song Playing Ce5
+.music-cell-song-fixed {
+	&:last-child {
+		background-image: none;
+	}
+	.mint-cell-title {
+		flex: 0;
+	}
+	.mint-cell-value {
+		flex: 1;
+		justify-content: space-between;
+	}
+}
+

@@ -1,0 +1,21 @@
+.page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  overflow: hidden;
+  .page-content {
+    padding-top: $header-height;
+  	position: absolute;
+  	left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: transparent;
+    overflow: auto;
+    // touch-action: none;                 // prevent default touch action
+    -webkit-overflow-scrolling: touch;  // scroll effect optimize in safari
+  }
+}
