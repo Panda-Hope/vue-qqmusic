@@ -1,10 +1,14 @@
 # 
 
-# Vue-QQMusic
+## Vue-QQMusic
+
 
 ## Build Setup
 
 ``` bash
+# download
+git clone https://github.com/Panda-Hope/vue-qqmusic
+
 # install dependencies
 npm install
 
