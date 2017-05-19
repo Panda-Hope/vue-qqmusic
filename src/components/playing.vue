@@ -20,7 +20,9 @@
 					    	</p>
 					    </div>
 					   </transition>
-					<img :src="ablumImgUrl" class="ablum" :class="{'spin': playingState != 'pause'}">
+					<img :src="ablumImgUrl" 
+					     class="ablum spin" 
+					     :style="{'animation-play-state': playingState != 'pause' ? '' : 'paused'}">
 				</div>
 				<lyrics slot="right"></lyrics>
 			</slider>

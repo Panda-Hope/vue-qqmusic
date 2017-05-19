@@ -1,0 +1,42 @@
+.mint-search {
+	position: fixed;
+	z-index: 2;
+	left: 0;
+	right: 0;
+	top: 0;
+	transition: top .5s ease;
+	margin-top: $header-height;
+	.mint-search-list {
+		background-color: $white-base;
+	}
+	.mint-searchbar {
+		background-color: $primary-color;
+		.mintui-search {
+			margin-left: 5px;
+			font-size: 14px;
+			color: $white-base;
+		}
+		&-inner {
+			height: 30px;
+			padding: 0;
+		}
+		&-inner, input {
+			color: $white-base;
+			background-color: #55a772;
+		}
+		input {
+			user-select: auto;
+			height: 30px;
+			line-height: 30px;
+			font-size: 14px;
+		}
+		input::-webkit-input-placeholder {
+			font-size: 14px;
+			color: $white-base;
+		}
+		&-cancel {
+			font-size: 14px;
+			color: $white-base;
+		}
+	}
+}

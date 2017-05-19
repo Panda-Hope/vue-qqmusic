@@ -2,7 +2,9 @@
   <div class="fixed-wrapper">
   	  <mt-cell class="music-cell-song-fixed">
 		<router-link tag="div" class="song-cover" :to="{name: 'playing'}">
-		  <img :src="ablumImgUrl" class="song-album-img" :class="{'spin-slow': playingState != 'pause'}">
+		  <img :src="ablumImgUrl" 
+		  	   class="song-album-img spin-slow" 
+		  	   :style="{'animation-play-state': playingState != 'pause' ? '' : 'paused'}">
 		  <div class="name-desc">
 		  	<p>{{ songMsg.data.songname }}</p>
 		  	<p>{{ currentLyric }}</p>
@@ -42,6 +44,10 @@
 	 * 已成完成UI：
 	 *	 1： 歌手头像随音乐播放转动
 	 *	 2： 播放圆圈随播放进度自动滚动
+	 *   Issuse:
+	 *		在这里这个组件在QQ音乐上其实是一个背景模糊的组件
+	 *		这个效果在前端其实是可以实现的详情大家可以参考下 http://codepen.io/rikschennink/pen/zvcgx
+	 * 		但是考虑到虽然可以实现但是实现成本过大，于是最终还是决定放弃
 	 * 播放原理简介：
 	 *   采用Vuex统一管理当前播放歌曲信息、歌曲列表、
 	 *   播放进度数据， 根据Vuex数据变化自动做出相应变化
@@ -159,7 +165,7 @@
 
 <style lang="sass">
 	.fixed-wrapper {
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		left: 0;
 		right: 0;

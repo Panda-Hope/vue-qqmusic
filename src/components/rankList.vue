@@ -5,9 +5,11 @@
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
 	    </mt-header>
 	    
-	    <div class="page-content" ref="scrollView">
+	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
-		    	 <div class="music-cover" :style="`background-image:url(${topinfo.pic_album})`"></div>
+		    	 <div class="music-cover" 
+		    	 	  ref="musicCover" 
+		    	 	  :style="{backgroundImage:`url(${topinfo.pic_album})`}"></div>
 		    	 <div class="title-wrap">
 		    	 	<p class="main-title" v-if="topinfo.ListName">{{ topinfo.ListName }} 第{{ data.update_time | getDayOfYear }}天</p>
 		    	 	<p class="minor-title" v-if="data.update_time">{{ data.update_time }}更新</p>
@@ -15,54 +17,50 @@
 		    	 <div class="cover-overlay"></div>
 		    </div>
 	    	<!-- <div class="song-cotainer" v-if="songlist.length"> -->
-	    	<div class="song-cotainer" v-if="1" ref="songContainer">
-	    		<div class="song-slide-wrapper">
-	    			<mt-navbar :value="selected" @input="function(val) {selected = val}">
-					  <mt-tab-item id="1">单曲</mt-tab-item>
-					  <mt-tab-item id="2">详情</mt-tab-item>
-					  <mt-tab-item id="3">歌词本</mt-tab-item>
-					</mt-navbar>
-					<mt-tab-container v-model="selected">
-						<mt-tab-container-item id="1">
-							<ul>
-								<li>
-									<mt-cell class="music-cell-type4">
-										<a><img src="../assets/play.png" class="icon">随机播放全部</a>
-										<div>
-											<a><img src="../assets/download.png" class="icon">下载</a>
-											<a style="margin-left: 10px;"><img src="../assets/choice.png" class="icon">多选</a>
-										</div>
-									</mt-cell>
-								</li>
-								<li v-for="(song, index) in songlist" 
-									key="index"
-								    @click="playMusic(songlist, index)">
-									<mt-cell class="music-cell-type3">
-										<div class="suffix">
-											<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
-											<p><img width="10" style="margin-right: 3px;" src="../assets/value-up.png">{{ song.in_count | convertListenCount }}</p>
-										</div>
-										<div class="song">
-											<p>{{ song.data.songname }}</p>
-											<p>{{ song.data.singer | spliceSinger }} · {{ song.data.albumname }}</p>
-										</div>
-										<span class="detail">···</span>
-									</mt-cell>
-								</li>
-							</ul>
-						</mt-tab-container-item>
-						<mt-tab-container-item id="2">
-							<p  v-html="topinfo.info" 
-								style="color: rgba(0, 0, 0, .5); 
-								padding: 0 15px;
-								font-size: 14px;
-								line-height: 22px;
-								margin-top: 20px;"></p>
-						</mt-tab-container-item>
-						<mt-tab-container-item id="3">
-						</mt-tab-container-item>
-					</mt-tab-container>
-	    		</div>
+	    	<div class="song-cotainer" v-if="1" ref="scrollTarget">
+    			<mt-navbar :value="selected" @input="function(val) {selected = val}">
+				  <mt-tab-item id="1">单曲</mt-tab-item>
+				  <mt-tab-item id="2">详情</mt-tab-item>
+				  <!-- <mt-tab-item id="3">歌词本</mt-tab-item> -->
+				</mt-navbar>
+				<mt-tab-container v-model="selected" ref="scrollTouch">
+					<mt-tab-container-item id="1">
+						<ul>
+							<li>
+								<mt-cell class="music-cell-type4">
+									<a><img src="../assets/play.png" class="icon">随机播放全部</a>
+									<div>
+										<a><img src="../assets/download.png" class="icon">下载</a>
+										<a style="margin-left: 10px;"><img src="../assets/choice.png" class="icon">多选</a>
+									</div>
+								</mt-cell>
+							</li>
+							<li v-for="(song, index) in songlist" 
+								key="index"
+							    @click="playMusic(songlist, index)">
+								<mt-cell class="music-cell-type3">
+									<div class="suffix">
+										<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
+										<p><img width="10" style="margin-right: 3px;" src="../assets/value-up.png">{{ song.in_count | convertListenCount }}</p>
+									</div>
+									<div class="song">
+										<p>{{ song.data.songname }}</p>
+										<p>{{ song.data.singer | spliceSinger }} · {{ song.data.albumname }}</p>
+									</div>
+									<span class="detail">···</span>
+								</mt-cell>
+							</li>
+						</ul>
+					</mt-tab-container-item>
+					<mt-tab-container-item id="2" v-if="selected == 2">
+						<p  v-html="topinfo.info" 
+							style="color: rgba(0, 0, 0, .5); 
+							padding: 0 15px;
+							font-size: 14px;
+							line-height: 22px;
+							margin-top: 20px;"></p>
+					</mt-tab-container-item>
+				</mt-tab-container>
 	    	</div>
 	    	<div class="song-cotainer" v-else></div>
     	</div>
@@ -72,8 +70,27 @@
 <script>
 	import fallback from './fallback.vue';
 	import { apiHandler } from '@/api/index';
-	import IScroll from 'iscroll/build/iscroll-probe';
-		
+	import AlloyTouch from 'alloytouch';
+	import Transform from 'css3transform';
+	import { lyricsAnalysis } from '../util';
+	import base64 from 'base-64';
+	import utf8 from 'utf8';
+	import { jsonp } from '@/api/index';
+
+	/* ==============================================================
+	 *                       RankList 组件
+	 *	已完成UI：
+	 *		随着列表滚动完成封面的模糊变化和标题的变化
+	 *  Issuse:
+	 *		在这里的话向大家推荐下AlloyTeam的 AlloyTouch
+	 *		而不是Iscroll，相比较于Iscroll，AlloyTouch更加简洁
+	 *		300多行的代码相比IScroll2000多的行的代码，大大减少了资源的占用,
+	 *		源码的阅读也非常流畅.相比之下AlloyTouch也赋予了滚动更多的灵活性
+	 *		而不像Iscroll必须要求Wapper和Scroll的限制，同时Iscroll对于高度
+	 *		的严格要求在Vue的模板中经常会出现无法获取明确高度而导致无法滚动，需要
+	 *		通过 Refresh 来刷新组件, 而AlloyTouch则不会又这种情况
+	 * ============================================================= */
+
 	export default {
 		name: 'rankList',
 		created() {
@@ -87,25 +104,59 @@
 		        self.topinfo = response.topinfo;
 		        self.songlist = response.songlist;
 		        self.data = response;
+
 	        })
 		},
 		mounted() {
-			let scroll = new IScroll(this.$refs.songContainer, {click: true, probeType: 3, });
-
-			scroll.on('scroll', function() {
-				console.log(this)
-			});
-			setTimeout(() => {
-				scroll.refresh();
-			}, 500);
+			this._initScroll();
 		},
 		data() {
 			return {
 				topinfo: {},
 				data: {},
 				songlist: [],
-				selected: "1"
+				selected: "1",
 			};
+		},
+		methods: {
+			_initScroll() {
+				let scrollTouch = this.$refs.scrollTouch.$el,
+					scrollTarget = this.$refs.scrollTarget;
+
+				Transform(scrollTarget, true);
+				let self = this;	
+				let alloyTouch = new AlloyTouch({
+					touch: scrollTouch,
+					target: scrollTarget,
+					sensitivity: .8,
+					bindSelf: true,
+					property: 'translateY',
+					max: 0,
+					change(pos) {
+						let coverHeight = -scrollTouch.clientWidth*.7 + 40;
+						function enableScroll() {
+							this.fixed = scrollTouch.scrollTop > 0 ? true : false;
+						};
+
+						if (this.target[this.property] <= coverHeight) {
+							// Fiexd The RankList When List Scroll To Top
+							this.target[this.property] = coverHeight;
+
+							// enable tab container scrolled When List Scroll To Top
+							this.preventDefault = false;
+							enableScroll.call(this)
+						}else {
+							this.preventDefault = true;
+						}
+						self._blurringCover(pos/coverHeight);
+					}
+				});
+			},
+			_blurringCover(percentage) {
+				let blur = 30,
+					musicCover = this.$refs.musicCover;
+				musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
+			}
 		}
 	}
 </script>
@@ -119,16 +170,17 @@
 			 width: 100%;
 			 background-repeat: no-repeat;
 			 background-size: cover;
+			 transition: blur .3s ease;
 			 &:after {
 			 	display: block;
 			 	content: '';
-			 	padding-top: 70%;
+			 	padding-top: 90%;
 			 }
 		}
 		.title-wrap {
 			position: absolute;
 			width: 100%;
-			bottom: 10px;
+			bottom: 25%;
 			color: #ffffff;
 			z-index: 3;
 			.main-title, .minor-title {
@@ -157,14 +209,18 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		top: $header-height;
-		bottom: 0;
+		top: 0;
 		background-color: transparent;
 		overflow: hidden;
 		&:before {
 			display: block;
 			content: '';
-			padding-top: calc(70% - 40px);
+			margin-top: 70%;
+		}
+		.lyrics-wrapper {
+			line-height: 42px;
+		    text-align: center;
+		    font-size: 16px;
 		}
 	}
 </style>

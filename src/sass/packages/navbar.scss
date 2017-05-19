@@ -14,3 +14,13 @@
 		}
 	}
 }
+
+.mint-tab-container {
+	background-color: $white-base;
+	height: 1000px;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	.mint-tab-container-wrap {
+		display: block;
+	}
+}
