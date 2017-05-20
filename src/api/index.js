@@ -58,6 +58,19 @@ let apiList = {
 		params: {
 			...basicParams
 		}
+	},
+	hotkey: {
+		url: 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',
+		params: {
+			...basicParams
+		}
+	},
+	search: {
+		url: 'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
+		params: {
+			...basicParams,
+			is_xml: 0
+		}
 	}
 };
 

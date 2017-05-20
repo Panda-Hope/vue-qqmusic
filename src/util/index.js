@@ -163,6 +163,15 @@ export function filterLyrics(lyricsObj) {
   };
 }
 
+// 处理热词
+export function dealHotkey(obj) {
+  let hotkeyObj = obj || {},
+      tempArr = [];
+  tempArr = [...hotkeyObj.hotkey];
+  tempArr.unshift({k: hotkeyObj.special_key, url: obj['special_url']});  
+  return tempArr.slice(0, 6);
+}
+
 
 
 

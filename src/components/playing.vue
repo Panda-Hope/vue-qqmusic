@@ -130,7 +130,7 @@
 
 <style lang="sass">
 	.playing-container {
-		z-index: 2;
+		z-index: 4;
 		.bgimg-blur, .overlay {
 			position: absolute;
 			left: 0;

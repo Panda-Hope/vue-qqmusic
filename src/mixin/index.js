@@ -22,6 +22,14 @@ Vue.mixin({
 				stack = stackSonglist(songlist, index);
 			store.commit(NameSpace + '/stackSonglist', stack);
 			store.dispatch(NameSpace + '/playSong', song);
+		},
+		goSpecial(url) {
+			this.$router.push({
+				name: 'special',
+				query: {
+					url: encodeURIComponent(url)
+				}
+			});
 		}
 	}
 });

@@ -56,6 +56,13 @@ const router = new Router({
       component(resolve) {
         require(['@/components/playing'], resolve);
       }
+    },
+    {
+      path: '/special',
+      name: 'special',
+      component(resolve) {
+        require(['@/components/special'], resolve);
+      }
     }
   ]
 });

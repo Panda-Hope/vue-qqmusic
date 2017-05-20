@@ -4,6 +4,7 @@
 	left: 0;
 	right: 0;
 	top: 0;
+	height: auto;
 	transition: top .5s ease;
 	margin-top: $header-height;
 	.mint-search-list {
@@ -19,12 +20,14 @@
 		&-inner {
 			height: 30px;
 			padding: 0;
+			border-radius: 4px;
 		}
 		&-inner, input {
 			color: $white-base;
 			background-color: #55a772;
 		}
 		input {
+			-webkit-appearance: textfield;
 			user-select: auto;
 			height: 30px;
 			line-height: 30px;
@@ -39,4 +42,9 @@
 			color: $white-base;
 		}
 	}
+}
+
+.mint-indicator-wrapper {
+	z-index: 3;
+	top: 30%;
 }

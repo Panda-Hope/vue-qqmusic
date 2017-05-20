@@ -41,7 +41,6 @@ if (process.env.NODE_ENV === 'component') {
  */
 export default {
   name: 'mt-search',
-
   data() {
     return {
       visible: false,
