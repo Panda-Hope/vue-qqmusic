@@ -1,5 +1,10 @@
 import Vue from 'vue';
-import { padString, getDayOfYear, spliceSinger, convertListenCount, timeFormat } from './util';
+import { 
+	padString, 
+	getDayOfYear, 
+	spliceSinger, 
+	convertListenCount, 
+	timeFormat } from './util';
 
 // 格式化音乐听众数据
 Vue.filter('listenFormat', val => {

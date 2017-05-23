@@ -31,9 +31,23 @@
   }
 }
 
-// Page Scroll Header Tittle Effects
+// song list 
+.list-view-enter-active, .list-view-leave-active {
+  transition: transform .5s ease;
+}
+.list-view-enter, .list-view-leave-to{
+  transform: translateY(100%);
+}
 
-
+// header title switch animation
+.title-enter-active, .title-leave-active {
+  transition-property: opacity, transform;
+  transition-duration: .5s;
+}
+.title-enter, .title-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
 
 // Song Ablum Infinite Rotate
 .spin-slow {
@@ -51,75 +65,3 @@
     transform: rotate(360deg);
   }
 }
-
-// // Bouncedown.css it is copyed from and did a little change
-// // https://github.com/daneden/animate.css/blob/master/source/bouncing_entrances/bounceInDown.css
-// .animated {
-//   animation-duration: .5s;
-//   animation-fill-mode: both;
-// }
-
-// .bounceInDown {
-//   animation-name: bounceInDown;
-// }
-
-// @keyframes bounceInDown {
-//   from, 60%, 75%, 90%, to {
-//     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-//   }
-
-//   0% {
-//     opacity: 0;
-//     transform: translate3d(0, -800px, 0);
-//   }
-
-//   60% {
-//     opacity: 1;
-//     transform: translate3d(0, 25px, 0);
-//   }
-
-//   // 75% {
-//   //   transform: translate3d(0, -10px, 0);
-//   // }
-
-//   // 90% {
-//   //   transform: translate3d(0, 5px, 0);
-//   // }
-
-//   to {
-//     transform: none;
-//   }
-// }
-
-// @keyframes bounceInUp {
-//   from, 60%, 75%, 90%, to {
-//     animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
-//   }
-
-//   from {
-//     opacity: 0;
-//     transform: translate3d(0, 800px, 0);
-//   }
-
-//   60% {
-//     opacity: 1;
-//     transform: translate3d(0, -20px, 0);
-//   }
-
-//   75% {
-//     transform: translate3d(0, 10px, 0);
-//   }
-
-//   // 90% {
-//   //   transform: translate3d(0, -5px, 0);
-//   // }
-
-//   to {
-//     transform: translate3d(0, 0, 0);
-//   }
-// }
-
-// .bounceInUp {
-//   animation-name: bounceInUp;
-// }
-

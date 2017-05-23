@@ -20,8 +20,8 @@
               <span class="listen-count">
                 <i class="listen-icon"></i>
                 {{ item.listenCount | listenFormat }}万
-                <!-- <i class="play-icon"></i> -->
               </span>
+              <i class="listen-play"></i>
             </div>
             <ul slot="title" class="song-list">
               <!-- <li class="song-title">{{ item.topTitle }}</li> -->
@@ -61,6 +61,7 @@
 
 <style lang="sass">
   .music-list {
+    margin-bottom: $bottom-height;
     > li {
       margin: 0 10px 10px;
     }

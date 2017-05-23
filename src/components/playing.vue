@@ -21,8 +21,8 @@
 					    </div>
 					   </transition>
 					<img :src="ablumImgUrl" 
-					     class="ablum spin" 
-					     :style="{'animation-play-state': playingState != 'pause' ? '' : 'paused'}">
+					     class="ablum" 
+					     :class="{'spin': playingState != 'pause'}">
 				</div>
 				<lyrics slot="right"></lyrics>
 			</slider>
@@ -38,12 +38,12 @@
 					</div>
 					<div class="play-control">
 						<img :src="require(`../assets/${playOrder}.png`)" @click="switchPlayOrder" class="order-icon">
-						<img @click="playPrev" src="../assets/back.png" class="back-icon">
+						<img @click="playSong('prev')" src="../assets/back.png" class="back-icon">
 						<img @click="pause(playingState == 'pause' ? '' : 'pause')" 
 							 :src="require(`@/assets/${this.songState.playingState == 'pause' ? 'play-2':'pause-2'}.png`)"
 							 class="play-icon">
-						<img @click="playNext" src="../assets/prev.png" class="back-icon">
-						<img src="../assets/list.png" class="list-icon">
+						<img @click="playSong('next')" src="../assets/prev.png" class="back-icon">
+						<img src="../assets/list.png" class="list-icon" @click="toggleShow">
 					</div>
 				</div>
 			</transition>
@@ -106,7 +106,8 @@
 		},
 		methods: {
 			...mapMutations(NameSpace, ['pause', 'switchPlayOrder']),
-			...mapActions(NameSpace, ['playNext', 'playPrev']),
+			...mapMutations('list', ['toggleShow']),
+			...mapActions(NameSpace, ['playSong']),
 			_bounceDown(el) {
 				Velocity(el, {translateY: -800}, {duration: 0});
 				Velocity(el, {translateY: [5, [0.215, 0.610, 0.355, 1.000]]}, {duration: 400});

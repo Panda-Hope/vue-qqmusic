@@ -53,6 +53,19 @@ let apiList = {
 			tpl: 3
 		}
 	},
+	recommend: {
+		url: 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
+		params: {
+			...basicParams,
+			pic: 500,
+			json: 1,
+			type: 1,
+			utf8: 1,
+			nosign: 1,
+			onlysong: 0,
+			nosign: 1
+		}
+	},
 	indexMsg: {
 		url: 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
 		params: {

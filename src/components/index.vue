@@ -35,7 +35,7 @@
 				</div>
 		    </search-vue>
 		</form>
-		<div class="page-content" style="padding-top: 84px;">
+		<div class="page-content" style="margin-top: 84px;padding-top: 0;">
 			<swiper :options="swiperOption" ref="mySwiper">
 				<swiper-slide v-for="(item, index) in indexMsg.slider" key="index">
 					<img :src="item.picUrl" class="slider-item" @click="goSpecial(item.linkUrl)">
@@ -51,7 +51,20 @@
 			<div class="recommend-wrapper">
 				<p class="title">热 门 推 荐</p>
 				<ul class="recommend-list">
-
+					<router-link v-for="(item, index) in indexMsg.songList"
+								 tag="li"
+								 key="index"
+								 :to="{ name: 'recommend', params: {id: item.id}}">
+						<div class="cover-wrapper">
+							<img :src="item.picUrl">
+							<span class="listen-count">
+								<i class="listen-icon"></i>
+								{{ item.accessnum | listenFormat }}万
+							</span>
+							<i class="listen-play"></i>
+						</div>
+						<span class="song-desc">{{ item.songListDesc }}</span>
+					</router-link>
 				</ul>
 			</div>
 		</div>
@@ -153,8 +166,8 @@
 						}]
 					}
 				};
-				store.commit(NameSpace + '/stackSonglist', [songObj]);
-				store.dispatch(NameSpace + '/playSong', songObj);
+				store.commit(NameSpace + '/stackSonglist', songObj);
+				store.dispatch(NameSpace + '/playSong', 0);
 			}
 		},
 		watch: {
@@ -185,7 +198,8 @@
 		transition: top .5s ease;
 	}
 	.swiper-container {
-			.slider-item {
+		z-index: 0;
+		.slider-item {
 			@include img-responsive;
 		}
 		.swiper-pagination-bullet-active {
@@ -221,7 +235,7 @@
 	}
 	.radio-list {
 		display: flex;
-		justify-content: space-bewteen;
+		justify-content: space-between;
 		padding: 20px;
 		> li {
 			display: flex;
@@ -248,9 +262,53 @@
 		.recommend-list {
 			display: flex;
 			flex-wrap: wrap;
+			justify-content: space-between;
 			> li {
-				flex: 1;
-
+				flex-basis: 33%;
+				.cover-wrapper {
+					position: relative;
+					.listen-count {
+						position: absolute;
+					    top: 100%;
+					    margin-top: -16px;
+					    font-size: 10px;
+					    color: #fff;
+					    .listen-icon {
+					    	    display: inline-block;
+							    width: 10px;
+							    height: 10px;
+							    margin-left: 3px;
+							    margin-right: 3px;
+							    background-position: 0 -50px;
+							    background-image: url(https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/list_sprite.png?max_age=19830212&d=20151105145423);
+							    background-repeat: no-repeat;
+							    background-size: 24px 60px;
+					    }
+					}
+					.listen-play {
+				    	    position: absolute;
+						    top: 100%;
+						    right: 5px;
+						    width: 24px;
+						    height: 24px;
+						    margin-top: -28px;
+						    background: url('https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/list_sprite.png?max_age=19830212&d=20151105145423');
+						    background-repeat: no-repeat;
+						    background-size: 24px 60px;
+				    }
+					img {
+						@include img-responsive;
+					}
+				}
+				.song-desc {
+					display: block;
+					padding: 5px;
+					font-size: 12px;
+					line-height: 1.2;
+					height: 40px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
 			}
 		}
 	}

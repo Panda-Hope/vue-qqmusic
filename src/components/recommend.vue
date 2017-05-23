@@ -1,12 +1,9 @@
 <template>
 	<div class="page">
-		<header-vue fixed 
-					class="music-header-2" 
-					:title="topinfo.ListName + `第${_getDayOfYear(data.update_time)}天`" 
-					:showTitle="showTitle">
+		<mt-header fixed class="music-header-2">
 	      <fallback slot="left"></fallback>
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
-	    </header-vue>
+	    </mt-header>
 	    
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
@@ -19,7 +16,8 @@
 		    	 </div>
 		    	 <div class="cover-overlay"></div>
 		    </div>
-	    	<div class="song-cotainer" v-if="songlist.length" ref="scrollTarget">
+	    	<!-- <div class="song-cotainer" v-if="songlist.length"> -->
+	    	<div class="song-cotainer" v-if="1" ref="scrollTarget">
     			<mt-navbar :value="selected" @input="function(val) {selected = val}">
 				  <mt-tab-item id="1">单曲</mt-tab-item>
 				  <mt-tab-item id="2">详情</mt-tab-item>
@@ -31,23 +29,19 @@
 							<li>
 								<mt-cell class="music-cell-type4">
 									<a><img src="../assets/play.png" class="icon">随机播放全部</a>
-									<!-- <div>
+									<div>
 										<a><img src="../assets/download.png" class="icon">下载</a>
 										<a style="margin-left: 10px;"><img src="../assets/choice.png" class="icon">多选</a>
-									</div> -->
+									</div>
 								</mt-cell>
 							</li>
 							<li v-for="(song, index) in songlist" 
 								key="index"
-							    @click="playMusic(songlist, index, song.data.songid)">
+							    @click="playMusic(songlist, index)">
 								<mt-cell class="music-cell-type3">
 									<div class="suffix">
 										<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
-										<p>
-											<span class="icon" 
-												  :style="{backgroundImage: `url(${require('../assets/value-up.png')})`}"></span>
-											{{ song.in_count | convertListenCount }}
-										</p>
+										<p><img width="10" style="margin-right: 3px;" src="../assets/value-up.png">{{ song.in_count | convertListenCount }}</p>
 									</div>
 									<div class="song">
 										<p>{{ song.data.songname }}</p>
@@ -68,12 +62,7 @@
 					</mt-tab-container-item>
 				</mt-tab-container>
 	    	</div>
-	    	<div class="ranklist-loading" v-else>
-	    		<div class="loading">
-	    			<mt-spinner type="fading-circle"></mt-spinner>
-	    			<p>正在载入...</p>
-	    		</div>
-	    	</div>
+	    	<div class="song-cotainer" v-else></div>
     	</div>
 	</div>
 </template>
@@ -83,56 +72,39 @@
 	import { apiHandler } from '@/api/index';
 	import AlloyTouch from 'alloytouch';
 	import Transform from 'css3transform';
-	import { lyricsAnalysis, getDayOfYear } from '../util';
+	import { lyricsAnalysis } from '../util';
 	import base64 from 'base-64';
 	import utf8 from 'utf8';
 	import { jsonp } from '@/api/index';
 
-	/* ==============================================================
-	 *                       RankList 组件
-	 *	已完成UI：
-	 *		随着列表滚动完成封面的模糊变化和标题的变化
-	 *  Issuse:
-	 *		在这里的话向大家推荐下AlloyTeam的 AlloyTouch
-	 *		而不是Iscroll，相比较于Iscroll，AlloyTouch更加简洁
-	 *		300多行的代码相比IScroll2000多的行的代码，大大减少了资源的占用,
-	 *		源码的阅读也非常流畅.相比之下AlloyTouch也赋予了滚动更多的灵活性
-	 *		而不像Iscroll必须要求Wapper和Scroll的限制，同时Iscroll对于高度
-	 *		的严格要求在Vue的模板中经常会出现无法获取明确高度而导致无法滚动，需要
-	 *		通过 Refresh 来刷新组件, 而AlloyTouch则不会又这种情况
-	 * ============================================================= */
+	/* ======================================
+	 *             Recommend 组件
+	 *  Recommend 组件只是rankList组件的复制而已，
+	 *  Recommend组件用于记录推荐列表的歌曲
+	 * ====================================== */
 
 	export default {
-		name: 'rankList',
+		name: 'recommend',
 		created() {
+			let self = this;
 	        apiHandler({
-	        	name: 'rankList',
+	        	name: 'recommend',
 	        	params: {
-	        		topid: this.$route.params.id
+	        		disstid: self.$route.params.id
 	        	}
 	        },(response) => {
-	        	/*
-	        	 * 延迟400ms执行等待页面切换动画完成
-	        	 * 原由: 当不存在延迟时组件的内容渲染与页面的切换将会同时执行
-	        	 * 由此将会导致在Chrome下产生卡顿
-	        	 * */
-		        setTimeout(() => {
-		        	this.topinfo = response.topinfo;
-			        this.songlist = response.songlist;
-			        this.data = response;
-
-			        // enable scroll 
-			        this.$nextTick(() => {
-			        	this._initScroll();
-			        });
-		        }, 400);
+	        	console.log(response)
+		        self.info = response[0];
+		        self.songlist = response[0].songlist;
+		        self.data = response;
 	        })
+		},
+		mounted() {
+			this._initScroll();
 		},
 		data() {
 			return {
 				topinfo: {},
-				title: '',
-				showTitle: false,
 				data: {},
 				songlist: [],
 				selected: "1",
@@ -158,13 +130,7 @@
 							this.fixed = scrollTouch.scrollTop > 0 ? true : false;
 						};
 
-						// Toggle The Title When Pos Change
-						if (pos <= -60) {
-							self.showTitle = true;
-						}else {
-							self.showTitle = false;
-						}
-						if (pos <= coverHeight) {
+						if (this.target[this.property] <= coverHeight) {
 							// Fiexd The RankList When List Scroll To Top
 							this.target[this.property] = coverHeight;
 
@@ -182,12 +148,6 @@
 				let blur = 30,
 					musicCover = this.$refs.musicCover;
 				musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
-			},
-			_getDayOfYear: getDayOfYear
-		},
-		components: {
-			headerVue(resolve) {
-				require(['./header.vue'], resolve);
 			}
 		}
 	}
@@ -237,7 +197,7 @@
 			z-index: 2;
 		}
 	}
-	.song-cotainer, .ranklist-loading {
+	.song-cotainer {
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -253,22 +213,6 @@
 			line-height: 42px;
 		    text-align: center;
 		    font-size: 16px;
-		}
-	}
-	.ranklist-loading {
-		bottom: 0;
-		.loading {
-			display: flex;
-			justify-content: center;
-			padding-top: 30%;
-			height: 100%;
-			background-color: $white-base;
-			p {
-				margin-top: 10px;
-				margin-left: 10px;
-				font-size: 10px;
-				color: rgba(0, 0, 0, .5);
-			}
 		}
 	}
 </style>

@@ -45,6 +45,13 @@ const router = new Router({
     	}
     },
     {
+      path: '/recommend/:id',
+      name: 'recommend',
+      component(resolve) {
+        require(['@/components/recommend'], resolve);
+      }
+    },
+    {
       path: '/playing',
       name: 'playing',
       meta: {

@@ -3,8 +3,8 @@
   	  <mt-cell class="music-cell-song-fixed">
 		<router-link tag="div" class="song-cover" :to="{name: 'playing'}">
 		  <img :src="ablumImgUrl" 
-		  	   class="song-album-img spin-slow" 
-		  	   :style="{'animation-play-state': playingState != 'pause' ? '' : 'paused'}">
+		  	   class="song-album-img" 
+		  	   :class="{'spin-slow': playingState != 'pause'}">
 		  <div class="name-desc">
 		  	<p>{{ songMsg.data.songname }}</p>
 		  	<p>{{ currentLyric }}</p>
@@ -26,17 +26,16 @@
 	            :src="require(`@/assets/${this.songState.playingState == 'pause' ? 'play-small':'pause'}.png`)"
 	            class="play-icon">
 			</div>
-			<img src="../assets/choice.png" class="list-icon">
+			<img src="../assets/list-green.png" class="list-icon" @click="toggleShow">
 		</div>
 	  </mt-cell>
 	  <audio :src="songMsg.getMedia(songMsg.data.songid)" ref="audio" @timeupdate="_playProgress"></audio>
-	  <!-- <div class="blurred-wrapper" ref="blurred"></div> -->
   </div>
 </template>
 
 <script>
-	/* ==========================================
-	 *                 底部音乐播放组件
+	/* ==============================================================
+	 *                 			底部音乐播放组件
 	 * 已完成功能：
 	 *   1： 音乐播放，暂停
 	 *	 2： 当前音乐播放完成，自动播放下一首
@@ -48,10 +47,14 @@
 	 *		在这里这个组件在QQ音乐上其实是一个背景模糊的组件
 	 *		这个效果在前端其实是可以实现的详情大家可以参考下 http://codepen.io/rikschennink/pen/zvcgx
 	 * 		但是考虑到虽然可以实现但是实现成本过大，于是最终还是决定放弃
+	 *  Issuse:
+	 *		这里存在一个IOS Safari的BUG -webkit-animatin-pause 在IOS下会被完全忽略想请可以查看
+	 *		http://stackoverflow.com/questions/27683012/css-animation-play-state-paused-doesnt-work-in-ios
+	 *		因而改为直接在封面滚动的动画上改为animation的添加和删除也由此使得头像的滚动动画无法暂停而是重新开始
 	 * 播放原理简介：
 	 *   采用Vuex统一管理当前播放歌曲信息、歌曲列表、
 	 *   播放进度数据， 根据Vuex数据变化自动做出相应变化
-	 * ========================================== */
+	 * ============================================================== */
 
 	import store from '../store';
 	import base64 from 'base-64';
@@ -101,7 +104,7 @@
 			// Play Or Pause When PlayingState Modified
 			playingState(state) {
 				let audio = this.$refs.audio;
-
+				
 				if (state == 'pause') {
 					audio.pause()
 				}else {
@@ -151,14 +154,14 @@
 			}
 		},
 		methods: {
-			...mapMutations(NameSpace, ['switchLyricIndex', 'switchLyricsArr', 'switchLyricDuration']),
+			...mapMutations(NameSpace, ['pause', 'switchLyricIndex', 'switchLyricsArr', 'switchLyricDuration']),
+			...mapMutations('list', ['toggleShow']),
 			_playProgress(e) {
 				let audio = e.target,
 					currentTime = audio.currentTime,
 					duration = audio.duration;
 				store.dispatch(NameSpace + '/resetProgress', {currentTime, duration});
-			},
-			...mapMutations(NameSpace, ['pause'])
+			}
 		}
 	};
 </script>
@@ -233,8 +236,8 @@
 			}
 			.list-icon {
 				margin-left: 16px;
-				width: 30px;
-				height: 30px;	
+				width: 24px;
+				height: 24px;	
 			}
 		}
 	}

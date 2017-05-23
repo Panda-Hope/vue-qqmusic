@@ -57,6 +57,17 @@
 			    background-repeat: no-repeat;
 			    background-size: 24px 60px;
 			}
+			.listen-play {
+		    	    position: absolute;
+				    top: 100%;
+				    right: 5px;
+				    width: 24px;
+				    height: 24px;
+				    margin-top: -28px;
+				    background: url('https://y.gtimg.cn/mediastyle/mobile/yqq_v5/img/list_sprite.png?max_age=19830212&d=20151105145423');
+				    background-repeat: no-repeat;
+				    background-size: 24px 60px;
+		    }
 			.listen-count {
 				position: absolute;
 				top: 100%;
@@ -133,6 +144,13 @@
 				margin-bottom: 5px;
 			}
 			p:nth-child(2) {
+				.icon {
+					display: inline-block;
+					width: 8px;
+					height: 8px;
+					background-size: cover;
+					background-repeat: no-repeat;
+				}
 				font-size: 9px;
 				color: rgba(0, 0, 0, .5);
 			}
@@ -230,6 +248,42 @@
 				margin-bottom: 5px;
 				font-size: 14px;
 			}
+		}
+	}
+}
+
+// 底部固定
+.music-cell-type6 {
+	&.active {
+		.name-wrap {
+			span {
+				color: $primary-color !important;
+			}
+		}
+	}
+	.mint-cell-wrapper {
+		background-image: none;
+		padding: 0 20px;
+	}
+	.mint-cell-title {
+		flex: 0;
+	}
+	.mint-cell-value {
+		flex: 1;
+		.name-wrap {
+			flex: 1;
+			span:first-child {
+				color: initial
+			}
+			span:last-child {
+				font-size: 14px;
+				color: rgba(0, 0, 0, .5);
+			}
+		}
+		.icon-delete {
+			width: 30px;
+			height: 30px;
+			background-size: cover;
 		}
 	}
 }
