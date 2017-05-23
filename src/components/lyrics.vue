@@ -30,7 +30,8 @@
 
 	
 	import TWEEN from 'tween.js';
-	import IScroll from 'iscroll';
+	import AlloyTouch from 'alloytouch';
+	import Transform from 'css3transform';
 	import { mapState, mapMutations } from 'vuex';
 	const NameSpace = 'playing';
 
@@ -45,7 +46,9 @@
 				lyrics: {
 					linearGradient: 0
 				},
+				alloyTouch: {},
 				scroll: {},
+				// lineHeight: 42,
 				scrollAbled: true // stop scroll to element when touch 
 			};
 		},
@@ -91,12 +94,28 @@
 		},
 		methods: {
 			_initScroll() {
-				let lyricsWrapper = this.$refs.lyricsWrapper;
-				let scroll = this.scroll = new IScroll(lyricsWrapper);
+				let scrollTouch = this.$refs.lyricsWrapper,
+					scrollTarget =  scrollTouch.children[0];
+				Transform(scrollTarget, true)
+				this.alloyTouch = new AlloyTouch({
+					touch: scrollTouch,
+					target: scrollTarget,
+					sensitivity: .8,
+					initialValue: scrollTouch.offsetHeight/2 >> 0,
+					bindSelf: true,
+					max: 0,
+					min: -scrollTarget.offsetHeight,
+					// step: this.lineHeight,
+					property: 'translateY'
+				});
 			},
 			_scrollToElement() {
-				let lyrics = this.$refs.lyricsWrapper.children[0].children;
-				this.scroll.scrollToElement(lyrics[this.lyricIndex], 2000, true, true);
+				let scrollTouch = this.$refs.lyricsWrapper,
+					scrollTarget = scrollTouch.children[0].children,
+					currentLyric = scrollTarget[this.lyricIndex],
+					offsetToCenter = scrollTouch.offsetHeight/2;
+					
+				this.alloyTouch.to(-currentLyric.offsetTop + offsetToCenter); 
 			}
 		}
 	};
@@ -110,7 +129,6 @@
 		.lyrics {
 			display: flex;
 			align-items: center;
-			margin-top: 40%;
 			@include center-auto;
 			.gradient {
 				-webkit-background-clip: text;

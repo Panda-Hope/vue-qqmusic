@@ -172,6 +172,14 @@ export function dealHotkey(obj) {
   return tempArr.slice(0, 6);
 }
 
+export function floatNumber(num, sliceDecimal) {
+  let numArr = String(num).split('.'),
+      integer = numArr[0],
+      decimal = numArr[1] || '';
+
+  return parseFloat(integer + '.' + decimal.slice(0, sliceDecimal >> 0));
+}
+
 
 
 

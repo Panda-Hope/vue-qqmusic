@@ -25,10 +25,15 @@ export default new Vuex.Store({
 			state: {
 				// if show the list
 				show: false,
+				// modify the list style
+				class: ''
 			},
 			mutations: {
 				toggleShow(state) {
 					state.show = !state.show;
+				},
+				modifyClass(state, style) {
+					state.class = style;
 				}
 			}
 		},
@@ -85,7 +90,7 @@ export default new Vuex.Store({
 				// stack songlist
 				stackSonglist(state, stack) {
 					state.songlist = [...(stack instanceof Array ? stack : [stack || {}])];
-					state.currentIndex = 0;
+					state.songState.currentIndex = 0;
 				},
 				pushSonglist(state, stack) {
 					state.songlist = [...state.songlist, ...(stack instanceof Array ? stack : [])];
@@ -121,7 +126,7 @@ export default new Vuex.Store({
 						let playingOrder = state.songState.playingOrder,
 							songlist = state.songlist,
 							length = songlist.length,
-							currentIndex = state.currentIndex;
+							currentIndex = state.songState.currentIndex;
 
 						switch(playingOrder) {
 							case 'cycle': 
@@ -153,7 +158,7 @@ export default new Vuex.Store({
 				// clear song in stack list
 				clearSong({state, dispatch}, index) {
 					state.songlist.splice(index >> 0, 1);
-					dispatch('playSong', 'next');
+					// dispatch('playSong', 'next');
 				},	
 			    // clear all song msg
 				clearSongStack({state, commit, dispatch}) {

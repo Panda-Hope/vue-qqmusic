@@ -1,5 +1,5 @@
 <template>
-	<div class="list-view">
+	<div class="list-view" :class="listclass">
 		<div class="header">
 			<div>
 				<img class="order-icon" 
@@ -37,7 +37,7 @@
 		name: 'listview',
 		computed: {
 			...mapState(NameSpace, ['songlist', 'songState']),
-			...mapState('list', {showlist: 'show'}),
+			...mapState('list', {showlist: 'show', listclass: 'class'}),
 			playingOrder() {
 				return this.songState.playingOrder;
 			}
@@ -52,6 +52,15 @@
 
 <style lang="sass">
 	.list-view {
+		&.dark {
+			&, .header, .close, .mint-cell {
+				color: $white-base;
+				background-color: rgba(0, 0, 0, .7);
+			}
+			.mint-cell .name-wrap span {
+				color: $white-base;
+			}
+		}
 		z-index: 5;
 		position: absolute;
 		overflow: hidden;

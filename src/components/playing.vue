@@ -78,6 +78,13 @@
 
 	export default {
 		name: 'playing',
+		// 更改主题颜色 ， 但是改了以后发现更加不好看了所以暂时注释掉
+		// mounted() {
+		// 	this.modifyClass('dark');
+		// },
+		// beforeDestroy() {
+		// 	this.modifyClass('');
+		// },
 		computed: {
 			...mapState(NameSpace, ['songMsg', 'songState']),
 			playingState() {
@@ -106,7 +113,7 @@
 		},
 		methods: {
 			...mapMutations(NameSpace, ['pause', 'switchPlayOrder']),
-			...mapMutations('list', ['toggleShow']),
+			...mapMutations('list', ['toggleShow',  'modifyClass']),
 			...mapActions(NameSpace, ['playSong']),
 			_bounceDown(el) {
 				Velocity(el, {translateY: -800}, {duration: 0});

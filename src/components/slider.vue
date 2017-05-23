@@ -22,7 +22,7 @@
 	 *   通过对于Touch Event 分析改变Page的 Transform, 同时通过
 	 *   PreventDefault 优化Safari下的滑动效果。
 	 * ================================================ */
-    import { preventDefault } from '../util';
+    import { preventDefault, floatNumber } from '../util';
 	const basicObject = {
 		'transition-duration': '300ms',
 		'transition-timing-function': 'ease'
@@ -34,6 +34,10 @@
 			scrollSpeed: {
 				type: Number,
 				default: 2
+			},
+			outFactor: {
+				type: Number,
+				default: 0.3
 			}
 		},
 		mounted() {
@@ -54,7 +58,9 @@
 					x: 0,
 					y: 0,
 					time: 0
-				}
+				},
+				_preventMove: false,
+				_firstTouchMove: false
 			};
 		},
 		computed: {
@@ -84,20 +90,38 @@
 				this.startPoint.x = point.clientX;
 				this.startPoint.y = point.clientY;
 				this.startPoint.time = Date.now();
+				this._firstTouchMove = true;
 			},
 			_swipeMove(e) {
 				let point = e.targetTouches[0],
-					offsetX = point.clientX - (this.lastPoint.x || this.startPoint.x),
-					offsetY = point.clientY - (this.lastPoint.y || this.startPoint.y);
+					offsetX = floatNumber(point.clientX - (this.lastPoint.x || this.startPoint.x), 2),
+					offsetY = floatNumber(point.clientY - (this.lastPoint.y || this.startPoint.y), 2);
 
 				 //store as the last point
 				this.lastPoint.x = point.clientX;
 				this.lastPoint.y = point.clientY;
 				this.lastPoint.time = Date.now();
 
-				if (Math.abs(offsetX) >= Math.abs(offsetY)) {
+				if (this._firstTouchMove) {
+					let dDis = Math.abs(this.lastPoint.x - this.startPoint.x) - Math.abs(this.lastPoint.y - this.startPoint.y);
+					if (dDis > 0) {
+						this._preventMove = false;
+					}else {
+						this._preventMove = true;
+					}
+				}
+
+				if (!this._preventMove) {
+					switch(this.current) { 
+						case 'right': 
+							console.log(this.lastPoint.x)
+							if (offsetX < 0) {
+								offsetX *= this.outFactor;
+							}
+							break;
+					}
 					this.pageX += offsetX*this.scrollSpeed;
-					this._transparent(Math.abs(this.pageX)/this.pageWidth);
+					this._transparent(floatNumber(Math.abs(this.pageX)/this.pageWidth, 2));
 				}
 			},
 			_swipeEnd(e) {
