@@ -12,6 +12,7 @@
 - Velocity, AlloyTouch等第三方库
 
 ## 运行演示
+#### 线上地址：[Vue-QQMusic](https://panda-hope.github.io/)
 #### 移动端请扫描下面二维码：
 ![二维码](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/qrcode.png)
 #### 运行截图：
