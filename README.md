@@ -1,5 +1,5 @@
 ## Vue-QQMusic
-### 简介：  
+### 简介：
 最近有点小闲置，于是乎希望写点东西，正好自己喜欢听歌，便决定自己写一个QQ音乐的简易版。
 顺便进一步加深下自己对移动端的知识。我会在每个核心组件和部分都加下注解大致说明原理，争取提供一个良好的代码阅读环境，在注视部分是采用英文写的，请原谅我撇脚的英语o(╯□╰)o，欢迎大家给我提出更好的意见( *︾▽︾)
 
@@ -15,8 +15,7 @@
 #### 移动端请扫描下面二维码：
 ![二维码](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/qrcode.png)
 #### 运行截图：
-<img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
-<img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
+<img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667"><img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
 
 ## 项目组件
 - [x] 首页 -- 完成
