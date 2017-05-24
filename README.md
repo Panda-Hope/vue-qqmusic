@@ -5,10 +5,10 @@
 
 ## 技术栈
 - Vue全家桶（使用Vue-cli作为构建工具）
-- webpack
+- Webpack
 - Mint-Ui
 - Es6
-- sass
+- Sass
 
 ## Build Setup
 
