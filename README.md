@@ -13,10 +13,10 @@
 
 ## 运行演示
 #### 移动端请扫描下面二维码：
-![二维码]()
+![二维码](https://panda-hope.github.io/gif/qrcode.png)
 #### 运行截图：
-![动图](https://panda-hope.github.io/gif/qrcode.png)
 ![动图](https://panda-hope.github.io/gif/music1.gif)
+![动图]()
 
 ## 项目组件
 - [x] 首页 -- 完成
