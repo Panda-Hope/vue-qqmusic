@@ -16,7 +16,7 @@
 ![二维码](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/qrcode.png)
 #### 运行截图：
 ![动图](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif)
-![动图]()
+![动图](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif)
 
 ## 项目组件
 - [x] 首页 -- 完成
