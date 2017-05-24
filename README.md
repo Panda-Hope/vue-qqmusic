@@ -9,6 +9,7 @@
 - Mint-Ui
 - Es6
 - Sass
+- Velocity, AlloyTouch等第三方库
 
 ## Build Setup
 
