@@ -15,7 +15,7 @@
 #### 移动端请扫描下面二维码：
 ![二维码](https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/qrcode.png)
 #### 运行截图：
-<div align="center">
+<div align="space-between">
     <img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
     <img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
 </div>
