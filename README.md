@@ -18,7 +18,7 @@
 #### 运行截图：
 <div align="space-between">
     <img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" width="375" height="667">
-    <img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music1.gif" align="right" width="375" height="667">
+    <img src="https://github.com/Panda-Hope/panda-hope.github.io/blob/master/gif/music2.gif" align="right" width="375" height="667">
 </div>
 
 ## 项目组件
