@@ -25,7 +25,7 @@
 			</li>
 		</ul>
 		<div class="close" @click="toggleShow">关闭</div>
-		<div class="overlay"></div>
+		<div class="overlay" @click="toggleShow"></div>
 	</div>
 </template>
 

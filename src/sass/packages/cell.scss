@@ -270,8 +270,10 @@
 	}
 	.mint-cell-value {
 		flex: 1;
+		overflow: hidden;
 		.name-wrap {
 			flex: 1;
+			@include font-ellipsis;
 			span:first-child {
 				color: initial
 			}
@@ -287,4 +289,35 @@
 		}
 	}
 }
+
+// 歌手列表 Cell
+// .music-cell-type7 {
+// 	&:last-child {
+// 		background-image: none;
+// 	}
+// 	.mint-cell-wrapper {
+// 		padding: 5px 20px;
+// 		 background-origin: border-box;
+// 		flex-direction: row-reverse;
+// 		background-image: linear-gradient(180deg, #eae7e7, #eae7e7 50%, transparent 50%);
+// 	    background-position: bottom left;
+// 		.avator {
+// 			width: 45px;
+// 			@include img-responsive;
+// 			border-radius: 50%;
+// 		}
+// 		.mint-cell-value {
+// 			margin-right: 15px;
+// 		}
+// 	}
+// 	.mint-cell-allow-right {
+// 		&::after {
+// 			border-color: #666;
+// 		    border-right-width: 1px;
+// 	        border-top-width: 1px;
+// 			width: 8px;
+// 			height: 8px;
+// 		}
+// 	}
+// }
 

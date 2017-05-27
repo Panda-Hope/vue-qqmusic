@@ -75,9 +75,9 @@ export function getDayOfYear(val) {
 }
 
 // 拼接歌手名称 
-export function spliceSinger(singers) {
+export function spliceSinger(singers = []) {
     let arr = [];
-
+    
     singers.forEach(singer => {
         arr.push(singer.name);
     });
@@ -109,7 +109,7 @@ export let stackSonglist = (function() {
 // 根据歌曲ID， 获取歌曲在当前列表的Index
 export function getCurrentIndex(list = [], songid) {
     return list.indexOf(list.find(song => {
-        let data = typeof song.data == 'object' ? song.data : {};
+        let data = typeof song.data == 'object' ? song.data : song;
         return data.songid == songid;
     }));
 }

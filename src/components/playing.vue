@@ -15,7 +15,11 @@
 						<div class="title-wrap">
 					    	<p>
 					    		<img src="../assets/horizontal.png" width="18">
-					    		<span style="vertical-align: middle">&nbsp;{{ songMsg.data.singer[0].name }}&nbsp;</span>
+					    		<router-link tag="span" 
+					    					 style="vertical-align: middle" 
+					    					 :to="{name: 'singer', params: {id:songMsg.data.singer[0].mid}}">
+					    			&nbsp;{{ songMsg.data.singer[0].name }}&nbsp;
+					    		</router-link>
 					    		<img src="../assets/horizontal.png" width="18">
 					    	</p>
 					    </div>
@@ -23,6 +27,7 @@
 					<img :src="ablumImgUrl" 
 					     class="ablum" 
 					     :class="{'spin': playingState != 'pause'}">
+					<p class="lyric">{{ currentLyric }}</p>
 				</div>
 				<lyrics slot="right"></lyrics>
 			</slider>
@@ -30,9 +35,13 @@
 				<div class="play-wrapper">
 					<div class="timer">
 						<span>{{ playingCurrent | timeFormat }}</span>
-						<div class="progress">
-					    	<div class="progress-bar" :style="{width: playingPrgress*100 + '%'}">
-					    	</div>
+						<div class="progress" ref="progress">
+					    	<div class="progress-bar" :style="{width: playingPrgress*100 + '%'}"></div>
+					    	<span @touchstart="startPrune"
+					    		  @touchmove="movePrune" 
+					    		  @touchend="endPurne"
+					    		  class="progress-ball" 
+					    		  :style="{left: playingPrgress*100 + '%'}"></span>
 					    </div>
 					    <span>{{ playTiming	| timeFormat }}</span>
 					</div>
@@ -60,6 +69,7 @@
 	 *   1： 音乐播放，暂停，下一首，上一首，
 	 *	 2： 循环播放，单曲循环，随机播放
 	 *   3： 歌曲列表删除
+	 *	 4:  歌曲播放进度调整
 	 * 已成完成UI：
 	 *	 1： 歌手头像随音乐播放转动
 	 *	 2： 进度条随播放进度自动滚动
@@ -85,6 +95,19 @@
 		// beforeDestroy() {
 		// 	this.modifyClass('');
 		// },
+		data() {
+			return {
+				// progress bar touchstart x point
+				touch: {
+					startProgress: 0,
+					width: 0,
+					x: 0
+				},
+				lastTouch: {
+					x: 0
+				}
+			};
+		},
 		computed: {
 			...mapState(NameSpace, ['songMsg', 'songState']),
 			playingState() {
@@ -102,6 +125,9 @@
 			playOrder() {
 				return this.songState.playingOrder;
 			},
+			currentLyric() {
+				return this.songState.currentLyricArr[this.songState.currentLyricIndex];
+			},
 			ablumImgUrl() {
 				let albummid = this.songMsg.data.albummid;
 				if (albummid) {
@@ -112,9 +138,34 @@
 			}
 		},
 		methods: {
-			...mapMutations(NameSpace, ['pause', 'switchPlayOrder']),
+			...mapMutations(NameSpace, ['pause', 'switchPlayOrder', 'pruneCurrentTime']),
 			...mapMutations('list', ['toggleShow',  'modifyClass']),
-			...mapActions(NameSpace, ['playSong']),
+			...mapActions(NameSpace, ['playSong', 'pruneProgress']),
+			startPrune(e) {
+				this.pause('pause');
+				this.touch.x = e.changedTouches[0].clientX;
+				this.touch.startProgress = this.playingPrgress;
+				this.touch.width = this.touch.width || this.$refs.progress.getBoundingClientRect().width;
+			},
+			movePrune(e) {
+				e && e.preventDefault();
+				let touch = e.changedTouches[0],
+					offsetX = touch.clientX - this.touch.x;
+
+				this.lastTouch.x = touch.clientX;
+				this.pruneProgress(this.touch.startProgress + offsetX/this.touch.width);
+			},
+			endPurne() {
+				let touch = this.lastTouch,
+					offsetX = touch.x - this.touch.x;
+				
+				this.pruneCurrentTime(this.touch.startProgress + offsetX/this.touch.width);
+				// play the music
+				this.pause();
+				// clear prune msg
+				this.touch = {};
+				this.lastTouch = {};
+			},
 			_bounceDown(el) {
 				Velocity(el, {translateY: -800}, {duration: 0});
 				Velocity(el, {translateY: [5, [0.215, 0.610, 0.355, 1.000]]}, {duration: 400});
@@ -165,6 +216,9 @@
 			height: 100%;
 			.ablum-wrapper {
 				display: flex;
+				flex-wrap: wrap;
+				align-content: center;
+				justify-content: center;
 			    align-items: center;
 			}
 			.ablum-wrapper, .play-wrapper {
@@ -186,6 +240,15 @@
 				width: 88%;
 				border-radius: 50%;
 				border: 8px solid rgba(0, 0, 0, .3);
+			}
+			.lyric {
+				width: 100%;
+				height: 20px;
+				line-height: 20px;
+				margin-top: 10px;
+				color: $white-base;
+				text-align: center;
+				overflow: hidden;
 			}
 		}
 		.play-control {

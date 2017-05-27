@@ -25,7 +25,8 @@
 	 *   歌词颜色部分采用 background-image: linear-gradient 来染色(详情可参考：
 	 *   https://css-tricks.com/snippets/css/gradient-text/)
 	 *   由于CSS3 Transition并不支持此属性因此采用Tween.js (https://github.com/tweenjs/tween.js)
-	 *   来执行属性变化的计算，并通过Window.requestAnimationFrame来最优化动画
+	 *   来执行属性变化的计算，并通过Window.requestAnimationFrame来优化，但是这样做需要在
+	 *	 短时间内执行大量的DOM操作，因此这个效果仍然会带来大量的内存消耗
 	 * ========================================================================= */
 
 	
@@ -38,8 +39,10 @@
 	export default {
 		name: 'lyrics',
 		mounted() {
-			// initialize scroll effects
-			this._initScroll();
+			// initialize scroll effects, delay 500ms when lyric animation complete
+			setTimeout(() => {
+				this._initScroll();
+			}, 500);
 		},
 		data() {
 			return {

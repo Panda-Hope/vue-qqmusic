@@ -70,6 +70,27 @@ const router = new Router({
       component(resolve) {
         require(['@/components/special'], resolve);
       }
+    },
+    {
+      path: '/radio',
+      name: 'radio',
+      component(resolve) {
+        require(['@/components/radio'], resolve);
+      }
+    },
+    {
+      path: '/singerlist',
+      name: 'singerlist',
+      component(resolve) {
+        require(['@/components/singerlist'], resolve);
+      }
+    },
+    {
+      path: '/singer/:id',
+      name: 'singer',
+      component(resolve) {
+        require(['@/components/singer'], resolve);
+      }
     }
   ]
 });

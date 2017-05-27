@@ -61,7 +61,6 @@
 
 <style lang="sass">
   .music-list {
-    margin-bottom: $bottom-height;
     > li {
       margin: 0 10px 10px;
     }

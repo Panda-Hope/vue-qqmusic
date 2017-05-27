@@ -30,7 +30,9 @@
 						<ul>
 							<li>
 								<mt-cell class="music-cell-type4">
-									<a><img src="../assets/play.png" class="icon">随机播放全部</a>
+									<a @click="randomPlayAll">
+										<img src="../assets/play.png" class="icon" >随机播放全部
+									</a>
 									<!-- <div>
 										<a><img src="../assets/download.png" class="icon">下载</a>
 										<a style="margin-left: 10px;"><img src="../assets/choice.png" class="icon">多选</a>
@@ -45,7 +47,7 @@
 										<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
 										<p>
 											<span class="icon" 
-												  :style="{backgroundImage: `url(${require('../assets/value-up.png')})`}"></span>
+												  :style="{backgroundImage: `url('/static/value-up.png')`}"></span>
 											{{ song.in_count | convertListenCount }}
 										</p>
 									</div>
@@ -77,17 +79,17 @@
     	</div>
 	</div>
 </template>
-
+	
 <script>
 	import fallback from './fallback.vue';
 	import { apiHandler } from '@/api/index';
 	import AlloyTouch from 'alloytouch';
 	import Transform from 'css3transform';
 	import { lyricsAnalysis, getDayOfYear } from '../util';
+	import { mapMutations, mapActions } from 'vuex';
 	import base64 from 'base-64';
 	import utf8 from 'utf8';
-	import { jsonp } from '@/api/index';
-
+	
 	/* ==============================================================
 	 *                       RankList 组件
 	 *	已完成UI：
@@ -101,6 +103,7 @@
 	 *		的严格要求在Vue的模板中经常会出现无法获取明确高度而导致无法滚动，需要
 	 *		通过 Refresh 来刷新组件, 而AlloyTouch则不会又这种情况
 	 * ============================================================= */
+	const NameSpace = 'playing';
 
 	export default {
 		name: 'rankList',
@@ -183,7 +186,14 @@
 					musicCover = this.$refs.musicCover;
 				musicCover.style.filter = `blur(${(percentage*blur >> 0)}px)`;
 			},
-			_getDayOfYear: getDayOfYear
+			_getDayOfYear: getDayOfYear,
+			randomPlayAll() {
+				this.stackSonglist(this.songlist);
+				this.switchPlayOrder('random');
+				this.playSong('next');
+			},
+			...mapMutations(NameSpace, ['switchPlayOrder', 'stackSonglist']),
+			...mapActions(NameSpace, ['playSong'])
 		},
 		components: {
 			headerVue(resolve) {

@@ -1,13 +1,18 @@
 <template>
   <div class="fixed-wrapper">
   	  <mt-cell class="music-cell-song-fixed">
-		<router-link tag="div" class="song-cover" :to="{name: 'playing'}">
+		<router-link tag="div" 
+					 class="song-cover" 
+					 :to="{name: 'playing'}"
+					 @touchstart.native="swipeStart"
+					 @touchmove.native="swipeMove"
+					 @touchend.native="swipeEnd">
 		  <img :src="ablumImgUrl" 
 		  	   class="song-album-img" 
 		  	   :class="{'spin-slow': playingState != 'pause'}">
 		  <div class="name-desc">
 		  	<p>{{ songMsg.data.songname }}</p>
-		  	<p>{{ currentLyric }}</p>
+		  	<p >{{ currentLyric || (songMsg.data.singer && songMsg.data.singer[0].name) }}</p>
 		  </div>
 		</router-link>
 		<div class="play-wrapper">
@@ -40,6 +45,7 @@
 	 *   1： 音乐播放，暂停
 	 *	 2： 当前音乐播放完成，自动播放下一首
 	 *	 3： 歌词自动随进度播放
+	 *.  4： 滑动切换歌曲
 	 * 已成完成UI：
 	 *	 1： 歌手头像随音乐播放转动
 	 *	 2： 播放圆圈随播放进度自动滚动
@@ -60,7 +66,7 @@
 	import base64 from 'base-64';
 	import utf8 from 'utf8';
 	import { jsonp } from '@/api/index';
-	import { mapState, mapMutations } from 'vuex';
+	import { mapState, mapMutations, mapActions } from 'vuex';
 	import { lyricsAnalysis } from '../util';
 	const NameSpace = 'playing';
 
@@ -73,6 +79,14 @@
 				  timeArr: [],       // each lyric start time
 				  lyricsArr: [],    // each item lyric
 				  durationArr: []  // each lyric cost time,
+				},
+				swipeObj: {
+					start: {
+						x: 0
+					},
+					move: {
+						x: 0
+					}
 				}
 			};
 		},
@@ -89,6 +103,9 @@
 			},
 			currentTime() {
 				return this.songState.current;
+			},
+			pruneTime() {
+				return this.songState.pruneTime;
 			},
 			ablumImgUrl() {
 				let albummid = this.songMsg.data.albummid;
@@ -131,7 +148,10 @@
 			// load the lyrics msg when playing song changed
 			playingSongid() {
 				let self = this;
-				jsonp(`https://api.darlin.me/music/lyric/${this.playingSongid}/?callback=jsonp1`, reponse => {
+				jsonp({
+					url: `https://api.darlin.me/music/lyric/${this.playingSongid}/?callback=jsonp1`,
+					jsonpCallback: 'jsonp1'
+				}, reponse => {
 					// decode lyrics from base64 encode and utf-8 decode
 					let lyrics = utf8.decode(base64.decode(reponse.lyric));
 					self.lyricsObj = lyricsAnalysis(lyrics);
@@ -151,16 +171,38 @@
 						this.switchLyricDuration(durationArr[index]);
 					}
 				});
+			},
+			pruneTime(time) {
+				let audio = this.$refs.audio;
+				audio.currentTime = time;
 			}
 		},
 		methods: {
 			...mapMutations(NameSpace, ['pause', 'switchLyricIndex', 'switchLyricsArr', 'switchLyricDuration']),
 			...mapMutations('list', ['toggleShow']),
+			...mapActions(NameSpace, ['playSong']),
 			_playProgress(e) {
 				let audio = e.target,
 					currentTime = audio.currentTime,
 					duration = audio.duration;
 				store.dispatch(NameSpace + '/resetProgress', {currentTime, duration});
+			},
+			swipeStart(e) {
+				let touch = e.changedTouches[0];
+				this.swipeObj.x = touch.clientX;
+			},
+			swipeMove(e) {
+				this.swipeObj.move.x = e.changedTouches[0].clientX;
+			},
+			swipeEnd() {
+				let touch = this.swipeObj.move,
+					offsetX = touch.x > 0 ? touch.x - this.swipeObj.x : 0;
+
+				if (Math.abs(offsetX) >= 60) {
+					offsetX < 0 ? this.playSong('next') : this.playSong('prev');
+				}
+				// clear swipe obj
+				this.swipeObj.start = this.swipeObj.move = {};
 			}
 		}
 	};

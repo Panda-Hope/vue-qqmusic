@@ -1,9 +1,16 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {getCurrentIndex, shuffle} from '../util';
+import {getCurrentIndex, shuffle, floatNumber } from '../util';
 
 Vue.use(Vuex);
 
+/* ==========================================================
+ * 					 	Vuex 状态管理
+ *	简介：
+ *		APP灵魂所在，在这里使用Vuex统一管理页面切换动画，歌曲播放状态，
+ *		歌曲进度等信息。所有对于歌曲的操作都通过Vuex来进行全局管理，然后
+ *		对相应的变化做出全局改变。
+ * ========================================================== */
 export default new Vuex.Store({
 	modules: {
 		// route switch object
@@ -56,6 +63,8 @@ export default new Vuex.Store({
 					playingProgress: 0,
 					// current play progress time
 					current: 0,
+					// 用于记录歌曲快进或后退后的时间进度
+					pruneTime: 0,
 					// playing song index in current songlist
 					currentIndex: 0,
 					// curent playing lyric index in currentLyric array
@@ -77,6 +86,9 @@ export default new Vuex.Store({
 					let songid = state.songMsg.data.songid;
 					state.songState.playingState = status == 'pause' || songid == null ? 'pause' : 'playing' + songid;
 				},
+				pruneCurrentTime(state, time) {
+					state.songState.pruneTime = state.songState.timing*time || 0;
+				},
 				// swtich the current lyric index
 				switchLyricIndex(state, index) {
 					state.songState.currentLyricIndex = index;
@@ -95,24 +107,43 @@ export default new Vuex.Store({
 				pushSonglist(state, stack) {
 					state.songlist = [...state.songlist, ...(stack instanceof Array ? stack : [])];
 				},
-				switchPlayOrder(state) {
+				switchPlayOrder(state, order) {
 					let	orderArr = ['cycle', 'singleCycle', 'random'],
-						current = orderArr.indexOf(state.songState.playingOrder);
-					state.songState.playingOrder = orderArr[current >= 2 ? 0 : current + 1];
+						current = orderArr.indexOf(state.songState.playingOrder),
+						next = orderArr.indexOf(order);
+					state.songState.playingOrder = next > -1 ? orderArr[next] : orderArr[current >= 2 ? 0 : current + 1];
 				}
 			},
 			actions: {
 				// Reset Play Progress To Some Point
-				resetProgress({state, dispatch}, payload = {currentTime: 0, duration: 0}) {
-					let current = parseInt(payload.currentTime),
-						timing = parseInt(payload.duration);
+				resetProgress({state, commit, dispatch}, payload = {currentTime: 0, duration: 0}) {
+					let current = parseInt(payload.currentTime) || 0,
+						timing = parseInt(payload.duration) || 0;
 
 					state.songState.playingProgress = current/timing;
 					state.songState.current = current;
 					state.songState.timing = timing;
 					if (current >= timing && timing>0) {
 						dispatch('playSong', 'next');
+						commit('pruneCurrentTime', 0);
 					}
+				},
+				// 用于歌曲的播放进度调整
+				pruneProgress({state, dispatch}, progress) {
+					let formatProgress;
+
+					if (progress <0) {
+						formatProgress = 0
+					}else if (progress > 1) {
+						formatProgress = 1;
+					}else {
+						formatProgress = progress;
+					}
+					
+					dispatch('resetProgress', {
+						currentTime: state.songState.timing*formatProgress,
+						duration: state.songState.timing
+					});
 				},
 				/* 
 				 * play a new song
@@ -127,7 +158,7 @@ export default new Vuex.Store({
 							songlist = state.songlist,
 							length = songlist.length,
 							currentIndex = state.songState.currentIndex;
-
+							
 						switch(playingOrder) {
 							case 'cycle': 
 								if (index == 'next') {
@@ -137,7 +168,7 @@ export default new Vuex.Store({
 								}
 								break;
 							case 'random':
-								nextIndex = shuffle(songlist)[0];
+								nextIndex = Math.random()*songlist.length >> 0;
 								break;
 							case 'singleCycle': 
 								nextIndex = currentIndex;
@@ -153,12 +184,10 @@ export default new Vuex.Store({
 					state.songState.playingState = 'play' + state.songMsg.data.songid;
 
 					dispatch('resetProgress');
-					commit('pause');
 				},
 				// clear song in stack list
 				clearSong({state, dispatch}, index) {
 					state.songlist.splice(index >> 0, 1);
-					// dispatch('playSong', 'next');
 				},	
 			    // clear all song msg
 				clearSongStack({state, commit, dispatch}) {

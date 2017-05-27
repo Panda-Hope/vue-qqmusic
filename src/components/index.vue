@@ -113,7 +113,7 @@
 					{
 						icon: 'people.png',
 						name: '歌手',
-						route: ''
+						route: 'singerlist'
 					},
 					{
 						icon: 'rank.png',
@@ -123,7 +123,7 @@
 					{
 						icon: 'radio.png',
 						name: '电台',
-						route: ''
+						route: 'radio'
 					}
 				],
 				swiperOption: {

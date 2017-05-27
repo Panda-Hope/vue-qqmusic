@@ -113,8 +113,7 @@
 
 				if (!this._preventMove) {
 					switch(this.current) { 
-						case 'right': 
-							console.log(this.lastPoint.x)
+						case 'right':  
 							if (offsetX < 0) {
 								offsetX *= this.outFactor;
 							}

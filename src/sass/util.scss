@@ -6,10 +6,25 @@
   color: $gray-base-font;
   font-size: 12px;
   .progress {
-    margin: 0 5px;
+    position: relative;
     flex: 1;
+    margin: 0 5px;
     background-image: linear-gradient(to bottom,$gray-minor-font 0,$gray-minor-font 100%);
     background-repeat: repeat-x;
+    &-ball {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      // transition: all .4s ease;
+      background-color: $primary-color;
+      &.active {
+        transform: scale(1);
+      }
+    }
     &-bar {
       width: 0;
       height: 100%;
@@ -18,7 +33,7 @@
       text-align: center;
       background-color: $primary-color;
       box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
-      transition: width .6s ease;
+      // transition: width .1s ease;
     }
   }
 }
