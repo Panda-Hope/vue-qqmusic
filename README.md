@@ -41,8 +41,8 @@
 
 	|-- build                            // webpack配置文件
 	|-- config                           // 项目打包路径
-	|-- src                              // 源码目录
-    |   |-- api                          // QQ音乐Api分析文件
+	|-- src                              // 源码目录. 
+    |   |-- api                          // QQ音乐Api分析文件
     |       |-- index.js                 
     |   |-- assets                       // 图片资源文件
 	|   |-- components                   // 组件
