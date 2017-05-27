@@ -4,7 +4,7 @@
 顺便进一步加深下自己对移动端的知识。我会在每个核心组件和部分都加下注解大致说明原理，争取提供一个良好的代码阅读环境，在注视部分是采用英文写的，请原谅我撇脚的英语o(╯□╰)o，欢迎大家给我提出更好的意见( *︾▽︾)
 
 #### 原理简介：
-首先这里通过Jsonp来进行跨域获取QQ音乐API数据，在[API Hanler](https://github.com/Panda-Hope/vue-qqmusic/blob/master/src/api/index.js)对API进行处理导出统一的方法来获取数据。  
+首先这里通过Jsonp来进行跨域获取QQ音乐API数据，在[API Hanler](https://github.com/Panda-Hope/vue-qqmusic/blob/master/src/api/index.js)对API进行处理导出统一的方法来获取数据。  
 核心文件则是在[Vuex](https://github.com/Panda-Hope/vue-qqmusic/blob/master/src/store/index.js),在这里使用Vuex统一管理页面切换动画，歌曲播放状态，歌曲进度等信息。所有对于歌曲的操作都通过Vuex来进行全局管理，然后对相应的变化做出全局改变。
 
 ## 技术栈
