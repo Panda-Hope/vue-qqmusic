@@ -38,7 +38,7 @@
 - [x] 底部固定歌曲播放条 -- 完成
 
 ## 项目结构 ##
-
+    ``` bash
 	|-- build                            // webpack配置文件
 	|-- config                           // 项目打包路径
 	|-- src                              // 源码目录
@@ -103,7 +103,7 @@
 	|-- README.md                        // README
 	|-- index.html                       // 入口html文件
 	|-- package.json                     // 项目及工具的依赖配置文件
-	
+```
 
 
 ## Build Setup
