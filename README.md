@@ -42,9 +42,9 @@
 	|-- build                            // webpack配置文件
 	|-- config                           // 项目打包路径
 	|-- src                              // 源码目录
-    |   |-- api                          // QQ音乐Api分析文件
+    |   |-- api                          // QQ音乐Api分析文件
     |       |-- index.js                 
-    |   |-- assets                       // 图片资源文件
+    |   |-- assets                       // 图片资源文件
 	|   |-- components                   // 组件
 	|       |-- fallback.vue             // 公用后退组件
 	|       |-- header.vue           	 // 重写Mini-Ui头部组件，来实现更多效果
