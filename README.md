@@ -43,7 +43,7 @@
 	|-- config                           // 项目打包路径
 	|-- src                              // 源码目录
     |   |-- api                          // QQ音乐Api分析文件
-    |       |-- index.js                 
+    |       |-- index.js                 
     |   |-- assets                       // 图片资源文件
 	|   |-- components                   // 组件
 	|       |-- fallback.vue             // 公用后退组件
