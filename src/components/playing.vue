@@ -217,7 +217,6 @@
 			.ablum-wrapper {
 				display: flex;
 				flex-wrap: wrap;
-				align-content: center;
 				justify-content: center;
 			    align-items: center;
 			}
@@ -227,9 +226,7 @@
 		}
 		.ablum-wrapper {
 			.title-wrap {
-				position: absolute;
 				width: 100%;
-				top: 0;
 				font-size: 14px;
 				text-align: center;
 				color: $white-base;
@@ -245,7 +242,6 @@
 				width: 100%;
 				height: 20px;
 				line-height: 20px;
-				margin-top: 10px;
 				color: $white-base;
 				text-align: center;
 				overflow: hidden;
@@ -253,7 +249,7 @@
 		}
 		.play-control {
 			display: flex;
-			margin-top: 20px;
+			margin-top: 10px;
 			padding: 0 20px;
 			justify-content: space-between;
 			align-items: center;

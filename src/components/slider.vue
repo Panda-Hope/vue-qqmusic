@@ -6,6 +6,10 @@
 			 @touchend="_swipeEnd">
 			<div class="slide-item" :style="opacityObj">
 				<slot></slot>
+				<ul class="indicator-wrapper">
+					<li :class="current == 'center' && 'active'"></li>
+					<li :class="current == 'right' && 'active'"></li>
+				</ul>
 			</div>
 			<div class="slide-item right" :style="styleObj">
 				<slot name="right"></slot>
@@ -168,6 +172,7 @@
 <style lang="sass">
 	.slide-container {
 		display: flex;
+		flex-wrap: wrap;
 		position: relative;
 		overflow: hidden;
 		width: 100%;
@@ -176,6 +181,7 @@
 			flex: 1;
 			.slide-item {
 				display: flex;
+				flex-wrap: wrap;
 				justify-content: center;
 				flex-shrink: 0;
 				width: 100%;
@@ -192,6 +198,24 @@
 				&.right {
 					transform: translate3d(100%, 0, 0);
 				}
+			}
+		}
+		.indicator-wrapper {
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			height: 10px;
+			>li:not(:last-child) {
+				margin-right: 5px;
+			}
+			> li {
+				&.active {
+					background-color: $white-base;
+				}
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background-color: rgba(255, 255, 255, .6);
 			}
 		}
 	}
