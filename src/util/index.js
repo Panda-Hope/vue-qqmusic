@@ -140,7 +140,7 @@ export function lyricsAnalysis(lyrics) {
   return filterLyrics(lyricsObj);
 }
 
-// 过滤掉歌词数组中 空白等待的部分
+// 过滤掉歌词数组中 空白等待、换行的部分
 export function filterLyrics(lyricsObj) {
   let timeArr = lyricsObj.timeArr || [],
       lyricsArr = lyricsObj.lyricsArr || [],
@@ -148,7 +148,7 @@ export function filterLyrics(lyricsObj) {
   let filterArr = [];
 
   lyricsArr = lyricsArr.filter((item, index) => {
-    if (item) {
+    if (item.trim()) {
       filterArr.push(index);
       return true;
     }

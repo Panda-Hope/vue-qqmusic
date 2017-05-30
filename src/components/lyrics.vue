@@ -39,10 +39,8 @@
 	export default {
 		name: 'lyrics',
 		mounted() {
-			// initialize scroll effects, delay 500ms when lyric animation complete
-			setTimeout(() => {
-				this._initScroll();
-			}, 500);
+			// initialize scroll effects
+			this._initScroll();
 		},
 		data() {
 			return {
@@ -82,7 +80,7 @@
 				new TWEEN.Tween(lyrics)
 				.to({
 					linearGradient: 100
-				}, this.lyricDuration*1000 + 500) //添加 500ms 来得到更优化的效果
+				}, this.lyricDuration*1000)
 				.start();
 
 				animate();
@@ -118,7 +116,7 @@
 					currentLyric = scrollTarget[this.lyricIndex],
 					offsetToCenter = scrollTouch.offsetHeight/2;
 					
-				this.alloyTouch.to(-currentLyric.offsetTop + offsetToCenter); 
+				this.alloyTouch.to(-currentLyric.offsetTop + offsetToCenter, 600); 
 			}
 		}
 	};
@@ -132,7 +130,7 @@
 		.lyrics {
 			display: flex;
 			align-items: center;
-			@include center-auto;
+			flex-direction: column;
 			.gradient {
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
