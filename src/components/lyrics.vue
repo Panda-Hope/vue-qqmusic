@@ -28,7 +28,7 @@
 	 *   来执行属性变化的计算，并通过Window.requestAnimationFrame来优化，但是这样做需要在
 	 *	 短时间内执行大量的DOM操作，因此这个效果仍然会带来大量的内存消耗
 	 * ========================================================================= */
-
+	 
 	
 	import TWEEN from 'tween.js';
 	import AlloyTouch from 'alloytouch';
@@ -97,6 +97,7 @@
 			_initScroll() {
 				let scrollTouch = this.$refs.lyricsWrapper,
 					scrollTarget =  scrollTouch.children[0];
+					
 				Transform(scrollTarget, true)
 				this.alloyTouch = new AlloyTouch({
 					touch: scrollTouch,

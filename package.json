@@ -1,7 +1,7 @@
 {
   "name": "vue-qqmusic",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "Vue QQMusic Project",
   "author": "494873674@qq.com",
   "private": true,
   "scripts": {

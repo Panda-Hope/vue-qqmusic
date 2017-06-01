@@ -207,7 +207,7 @@
 		}
 	}
 	.hotkey-wrapper {
-		padding: 20px;	
+		padding: 15px;	
 		p:first-child {
 			font-size: 14px;
 			color: rgba(0, 0, 0, 0.5);

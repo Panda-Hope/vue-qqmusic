@@ -154,6 +154,7 @@
 				}, reponse => {
 					// decode lyrics from base64 encode and utf-8 decode
 					let lyrics = utf8.decode(base64.decode(reponse.lyric));
+					
 					self.lyricsObj = lyricsAnalysis(lyrics);
 					self.switchLyricsArr(self.lyricsObj.lyricsArr);
 				})

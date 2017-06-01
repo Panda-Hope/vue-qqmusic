@@ -135,6 +135,7 @@
 					scrollTarget = this.$refs.scrollTarget;
 
 				Transform(scrollTarget, true);
+
 				let self = this;	
 				let alloyTouch = new AlloyTouch({
 					touch: scrollTouch,
@@ -150,11 +151,8 @@
 						};
 
 						// Toggle The Title When Pos Change
-						if (pos <= -60) {
-							self.showTitle = true;
-						}else {
-							self.showTitle = false;
-						}
+						self.showTitle = pos <= -60 ? true : false;
+
 						if (pos <= coverHeight) {
 							// Fiexd The RankList When List Scroll To Top
 							this.target[this.property] = coverHeight;
