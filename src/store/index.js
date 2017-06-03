@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import Vuex from 'vuex';
 import {getCurrentIndex, shuffle, floatNumber } from '../util';
 
