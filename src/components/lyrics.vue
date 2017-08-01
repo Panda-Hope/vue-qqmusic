@@ -28,7 +28,7 @@
 	 *   来执行属性变化的计算，并通过Window.requestAnimationFrame来优化，但是这样做需要在
 	 *	 短时间内执行大量的DOM操作，因此这个效果仍然会带来大量的内存消耗
 	 * ========================================================================= */
-	import TWEEN from 'tween.js';
+	import TWEEN from '@tweenjs/tween.js';
 	import AlloyTouch from 'alloytouch';
 	import Transform from 'css3transform';
 	import { mapState, mapMutations } from 'vuex';

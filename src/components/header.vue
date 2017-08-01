@@ -21,7 +21,7 @@
  * 重写Mini-UI Header 来实现更多自定义效果
  * 增加Title 切换动画和长标题自动滚动功能
  */
-import TWEEN from 'tween.js';
+import TWEEN from '@tweenjs/tween.js';
 
 export default {
   name: 'mt-header',

@@ -198,6 +198,7 @@ export default new Vuex.Store({
 					};
 					state.songlist = [];
 					state.songMsg = defaultSongMsg;
+					
 					// dispatch('resetProgress');
 					commit('pause', 'pause');
 				}
