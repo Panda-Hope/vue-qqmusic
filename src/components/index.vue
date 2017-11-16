@@ -1,12 +1,12 @@
 <template>
 	<div class="page">
-		<mt-header fixed 
-				   title="音乐馆" 
-				   class="music-header scroll-header" 
+		<mt-header fixed
+				   title="音乐馆"
+				   class="music-header scroll-header"
 				   :style="searchVisible && {top: '-40px'}"></mt-header>
 		<form @submit="searching">
-			<search-vue v-model="searchValue" 
-					    :visible.sync="searchVisible" 
+			<search-vue v-model="searchValue"
+					    :visible.sync="searchVisible"
 					    :style="searchVisible && {top: '-40px', height: '100%',height: '100vh'}">
 				<div class="hotkey-wrapper" v-if="searchState == 0">
 					<p>热门搜索</p>
@@ -22,7 +22,7 @@
 					</ul>
 				</div>
 				<div class="result-list" v-if="searchState == 2">
-					<mt-cell class="music-cell-type5" 
+					<mt-cell class="music-cell-type5"
 					         v-for="(item, index) in searchResult"
 					         key="index"
 					         @click.native="playSingleMusic(item)">
@@ -37,7 +37,7 @@
 		</form>
 		<div class="page-content" style="margin-top: 84px;padding-top: 0;">
 			<swiper :options="swiperOption" ref="mySwiper">
-				<swiper-slide v-for="(item, index) in indexMsg.slider" key="index">
+				<swiper-slide v-for="(item, index) in indexMsg.slider" :key="index">
 					<img :src="item.picUrl" class="slider-item" @click="goSpecial(item.linkUrl)">
 				</swiper-slide>
 				<div class="swiper-pagination"  slot="pagination"></div>
@@ -76,7 +76,7 @@
 	 * 					 	QQ音乐 首页
 	 *	已完成功能：
 	 *		1： 歌曲搜索
-	 *  Issuse： 
+	 *  Issuse：
 	 *		这里在搜索功能上有点问题， 由于QQ音乐Api的跨域限制无法获取
 	 *		搜索结果改为获取临时的结果， 无法获取完成歌曲信息，因此缺少了封面
 	 *		在这里欢迎大家提供更好的意见
@@ -97,13 +97,13 @@
 	        this.indexMsg = response.data;
 	        apiHandler('hotkey', (response) => {
 		        this.hotkeys = dealHotkey(response.data);
-		      });
+		    });
 	      });
 	    },
 		data() {
 			return {
 				indexMsg: {},
-				searchVisible: false, 
+				searchVisible: false,
 				searchValue: '',	   // input value,
 				searchState: 0,        // search input bar state 0: ready, 1: searching, 2: search result,
 				searchResult: {},      // song search result
@@ -207,7 +207,7 @@
 		}
 	}
 	.hotkey-wrapper {
-		padding: 15px;	
+		padding: 15px;
 		p:first-child {
 			font-size: 14px;
 			color: rgba(0, 0, 0, 0.5);

@@ -1,8 +1,8 @@
 export function getEncodingUrl(options) {
 	let queryString = '',
 		url = options.url,
-		uniqueName = 'jsonp' + new Date().getTime(),  // get unique jsonp callbackname, aviod callback bug at same time 
-		urlParams = {...options.params, jsonpCallback: uniqueName};  
+		uniqueName = 'jsonp' + new Date().getTime(),  // get unique jsonp callbackname, aviod callback bug at same time
+		urlParams = {...options.params, jsonpCallback: uniqueName};
 
 	for (let key in urlParams) {
 	    if (queryString) {
@@ -25,7 +25,7 @@ export function jsonp(urlObj, callback) {
         document.body.removeChild(script);
         callback(data);
     };
-    
+
     let script = document.createElement('script');
     script.src = url;
     document.body.appendChild(script);
@@ -35,7 +35,7 @@ export function jsonp(urlObj, callback) {
 /* =============================================
  * 				 QQ音乐Api解析
  *	简介：
- *		将需要用到的API进行分析， 通过getEncodingUrl	
+ *		将需要用到的API进行分析， 通过getEncodingUrl
  *		对URL进行组装，通过jsonp来执行跨域数据获取，
  *		最后通过 apiHandler 方法导出统一的接口
  * =============================================  */
@@ -96,7 +96,7 @@ let apiList = {
 			...basicParams
 		}
 	},
-	// 搜索API 
+	// 搜索API
 	search: {
 		url: 'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
 		params: {

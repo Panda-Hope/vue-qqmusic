@@ -1,17 +1,17 @@
 <template>
 	<div class="page">
-		<header-vue fixed 
-					class="music-header-2" 
-					:title="topinfo.dissname" 
+		<header-vue fixed
+					class="music-header-2"
+					:title="topinfo.dissname"
 					:showTitle="showTitle">
 	      <fallback slot="left"></fallback>
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
 	    </header-vue>
-	    
+
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
-		    	 <div class="music-cover" 
-		    	 	  ref="musicCover" 
+		    	 <div class="music-cover"
+		    	 	  ref="musicCover"
 		    	 	  :style="{backgroundImage:`url(${topinfo.logo})`}"></div>
 		    	 <div class="cover-overlay"></div>
 		    </div>
@@ -35,14 +35,14 @@
 									</div> -->
 								</mt-cell>
 							</li>
-							<li v-for="(song, index) in songlist" 
+							<li v-for="(song, index) in songlist"
 								key="index"
 							    @click="playMusic(songlist, index, song.data.songid)">
 								<mt-cell class="music-cell-type3">
 									<div class="suffix">
 										<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
 										<!-- <p>
-											<span class="icon" 
+											<span class="icon"
 												  :style="{backgroundImage: `url(${require('../assets/value-up.png')})`}"></span>
 											{{ song.in_count | convertListenCount }}
 										</p> -->
@@ -57,8 +57,8 @@
 						</ul>
 					</mt-tab-container-item>
 					<mt-tab-container-item id="2" v-if="selected == 2">
-						<p  v-html="topinfo.desc" 
-							style="color: rgba(0, 0, 0, .5); 
+						<p  v-html="topinfo.desc"
+							style="color: rgba(0, 0, 0, .5);
 							padding: 0 15px;
 							font-size: 14px;
 							line-height: 22px;
@@ -89,6 +89,7 @@
 	 *             Recommend 组件
 	 *  Recommend 组件只是rankList组件的复制而已，
 	 *  Recommend组件用于显示推荐列表的歌曲
+     *  目前QQ音乐 API获取已添加验证，暂时无法获取
 	 * ====================================== */
 	const NameSpace = 'playing';
 
@@ -113,7 +114,7 @@
 		        		data: song
 		        	}))
 
-			        // enable scroll 
+			        // enable scroll
 			        this.$nextTick(() => {
 			        	this._initScroll();
 			        });
@@ -136,7 +137,7 @@
 
 				Transform(scrollTarget, true);
 
-				let self = this;	
+				let self = this;
 				let alloyTouch = new AlloyTouch({
 					touch: scrollTouch,
 					target: scrollTarget,
