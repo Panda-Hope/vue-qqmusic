@@ -5,18 +5,18 @@
 	    </mt-header>
 		<div class="page-content">
 			<mt-index-list v-if="singerlistAll.length">
-			  <mt-index-section :index="itemAll.name" 
-			  					v-for="(itemAll, key) in singerlistAll" 
-			  					key="key">
-			  	<router-link v-for="(item, key) in itemAll.singerlist" 
+			  <mt-index-section :index="itemAll.name"
+			  					v-for="(itemAll, key) in singerlistAll"
+			  					:key="key">
+			  	<router-link v-for="(item, key) in itemAll.singerlist"
 			  				 class="singer-list-item"
 			  				 tag="li"
-			  				 key="key"
+			  				 :key="key"
 			  				 v-if="key < 20"
 			  				 :to="{name: 'singer', params: {id: item.Fsinger_mid}}">
 			  		<img class="avator" v-lazy="getAvator(item.Fsinger_mid)">
 			  		<span>{{ item.Fsinger_name }}</span>
-			  		<i class="icon"></i>	
+			  		<i class="icon"></i>
 		  		</router-link>
 			  </mt-index-section>
 			</mt-index-list>

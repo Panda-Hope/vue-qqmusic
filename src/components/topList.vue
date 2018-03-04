@@ -8,11 +8,11 @@
         <li>
           <mt-cell title="Q Q 音 乐 巅 峰 榜"  class="music-cell-type1"></mt-cell>
         </li>
-        <router-link 
-          tag="li" 
-          :to="{name: 'rankList', params: { id: item.id }}" 
+        <router-link
+          tag="li"
+          :to="{name: 'rankList', params: { id: item.id }}"
           v-for="item in topList"
-          key="item.id" >
+          :key="item.id" >
           <mt-cell  class="music-cell-type2">
             <!-- <img :src="item.picUrl" width="100" hei="100"> -->
             <div class="listen-cover">
@@ -25,7 +25,7 @@
             </div>
             <ul slot="title" class="song-list">
               <!-- <li class="song-title">{{ item.topTitle }}</li> -->
-              <li v-for="(song, index) in item.songList" key="index" class="song-item"> 
+              <li v-for="(song, index) in item.songList" :key="index" class="song-item">
                 {{ index+1 }}
                 {{ song.songname}}
                 <span class="song-singer">{{ '- '+song.singername }}</span>

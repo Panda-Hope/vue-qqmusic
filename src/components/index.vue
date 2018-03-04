@@ -24,7 +24,7 @@
 				<div class="result-list" v-if="searchState == 2">
 					<mt-cell class="music-cell-type5"
 					         v-for="(item, index) in searchResult"
-					         key="index"
+					         :key="index"
 					         @click.native="playSingleMusic(item)">
 					    <i class="music-icon"></i>
 					    <div class="song-wrapper">
@@ -53,7 +53,7 @@
 				<ul class="recommend-list">
 					<router-link v-for="(item, index) in indexMsg.songList"
 								 tag="li"
-								 key="index"
+								 :key="index"
 								 :to="{ name: 'recommend', params: {id: item.id}}">
 						<div class="cover-wrapper">
 							<img :src="item.picUrl">
