@@ -1,8 +1,8 @@
 <template>
 	<div class="page">
-		<header-vue fixed 
-					class="music-header-2" 
-					:title="topinfo.singer_name" 
+		<header-vue fixed
+					class="music-header-2"
+					:title="topinfo.singer_name"
 					:showTitle="showTitle">
 	      <fallback slot="left"></fallback>
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
@@ -10,8 +10,8 @@
 	    
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
-		    	 <div class="music-cover" 
-		    	 	  ref="musicCover" 
+		    	 <div class="music-cover"
+		    	 	  ref="musicCover"
 		    	 	  :style="{backgroundImage:topinfo.singer_mid && `url(https://y.gtimg.cn/music/photo_new/T001R300x300M000${topinfo.singer_mid}.jpg?max_age=2592000)`}"></div>
 		    	 <div class="title-wrap">
 		    	 	<p class="main-title" v-if="topinfo.singer_name">{{ topinfo.singer_name }}</p>
@@ -39,8 +39,8 @@
 									</div> -->
 								</mt-cell>
 							</li>
-							<li v-for="(song, index) in songlist" 
-								key="index"
+							<li v-for="(song, index) in songlist"
+								  :key="index"
 							    @click="playMusic(songlist, index, song.data.songid)">
 								<mt-cell class="music-cell-type3">
 									<div class="suffix">
@@ -56,8 +56,8 @@
 						</ul>
 					</mt-tab-container-item>
 					<mt-tab-container-item id="2" v-if="selected == 2">
-						<p  v-html="topinfo.SingerDesc" 
-							style="color: rgba(0, 0, 0, .5); 
+						<p  v-html="topinfo.SingerDesc"
+							style="color: rgba(0, 0, 0, .5);
 							padding: 0 15px;
 							font-size: 14px;
 							line-height: 22px;
@@ -113,7 +113,7 @@
 		        		data: song.musicData
 		        	}))
 
-			        // enable scroll 
+			        // enable scroll
 			        this.$nextTick(() => {
 			        	this._initScroll();
 			        });
@@ -135,7 +135,7 @@
 
 				Transform(scrollTarget, true);
 
-				let self = this;	
+				let self = this;
 				let alloyTouch = new AlloyTouch({
 					touch: scrollTouch,
 					target: scrollTarget,

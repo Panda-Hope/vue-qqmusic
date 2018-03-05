@@ -1,8 +1,8 @@
 <template>
 	<div class="page">
-		<header-vue fixed 
-					class="music-header-2" 
-					:title="topinfo.ListName + `第${_getDayOfYear(data.update_time)}天`" 
+		<header-vue fixed
+					class="music-header-2"
+					:title="topinfo.ListName + `第${_getDayOfYear(data.update_time)}天`"
 					:showTitle="showTitle">
 	      <fallback slot="left"></fallback>
 	      <span slot="right" style="font-size: 30px;font-weight: bold;display: inline-block;margin-top: -10px;">...</span>
@@ -10,8 +10,8 @@
 	    
 	    <div class="page-content" style="overflow: hidden;">
 	    	<div class="music-cover-wrap">
-		    	 <div class="music-cover" 
-		    	 	  ref="musicCover" 
+		    	 <div class="music-cover"
+		    	 	  ref="musicCover"
 		    	 	  :style="{backgroundImage:`url(${topinfo.pic_album})`}"></div>
 		    	 <div class="title-wrap">
 		    	 	<p class="main-title" v-if="topinfo.ListName">{{ topinfo.ListName }} 第{{ data.update_time | getDayOfYear }}天</p>
@@ -39,14 +39,14 @@
 									</div> -->
 								</mt-cell>
 							</li>
-							<li v-for="(song, index) in songlist" 
-								key="index"
+							<li v-for="(song, index) in songlist"
+                  :key="index"
 							    @click="playMusic(songlist, index, song.data.songid)">
 								<mt-cell class="music-cell-type3">
 									<div class="suffix">
 										<p :style="index<3 && {color: '#FF4500'}">{{ index + 1}}</p>
 										<p>
-											<span class="icon" 
+											<span class="icon"
 												  :style="{backgroundImage: `url('/static/value-up.png')`}"></span>
 											{{ song.in_count | convertListenCount }}
 										</p>
@@ -61,8 +61,8 @@
 						</ul>
 					</mt-tab-container-item>
 					<mt-tab-container-item id="2" v-if="selected == 2">
-						<p  v-html="topinfo.info" 
-							style="color: rgba(0, 0, 0, .5); 
+						<p  v-html="topinfo.info"
+							style="color: rgba(0, 0, 0, .5);
 							padding: 0 15px;
 							font-size: 14px;
 							line-height: 22px;
@@ -79,7 +79,7 @@
     	</div>
 	</div>
 </template>
-	
+
 <script>
 	import fallback from './fallback.vue';
 	import { apiHandler } from '@/api/index';
@@ -124,7 +124,7 @@
 			        this.songlist = response.songlist;
 			        this.data = response;
 
-			        // enable scroll 
+			        // enable scroll
 			        this.$nextTick(() => {
 			        	this._initScroll();
 			        });
@@ -149,7 +149,7 @@
 
 				Transform(scrollTarget, true);
 
-				let self = this;	
+				let self = this;
 				let alloyTouch = new AlloyTouch({
 					touch: scrollTouch,
 					target: scrollTarget,

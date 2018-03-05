@@ -10,6 +10,7 @@ import Mint from './mintUi';
 // Inject Global Css And Themes Css
 import './sass/index.scss';
 import './sass/themes/default.scss';
+import 'swiper/dist/css/swiper.css';
 
 Vue.config.productionTip = false;
 
